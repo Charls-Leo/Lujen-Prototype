@@ -1,0 +1,108 @@
+---
+/**
+ * Pie: continúa la habitación oscura del cierre. Logotipo completo, índice y contacto.
+ */
+import { Image } from 'astro:assets';
+import marcaLight from '@/assets/brand/lujen-marca-light.png';
+import { primaryNav, site, whatsappUrl } from '@/config/site';
+
+const year = new Date().getFullYear();
+const navHref = (hash: string) => (Astro.url.pathname === '/' ? hash : `/${hash}`);
+const links = [...primaryNav, { label: 'Contacto', href: '#contacto' as const }];
+---
+
+<footer class="footer">
+  <div class="container footer__inner">
+    <Image
+      class="footer__brand"
+      src={marcaLight}
+      alt={`${site.name}: ${site.slogan.join(', ')}`}
+      width={420}
+      densities={[1, 2]}
+    />
+
+    <nav class="footer__nav" aria-label="Pie de página">
+      <ul role="list">
+        {
+          links.map((item) => (
+            <li>
+              <a class="has-roll" href={navHref(item.href)}>
+                <span class="roll">
+                  <span data-text={item.label}>{item.label}</span>
+                </span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <div class="footer__contact">
+      <a class="footer__whatsapp has-roll" href={whatsappUrl} target="_blank" rel="noopener noreferrer">
+        <span class="roll"><span data-text="WhatsApp">WhatsApp</span></span>
+      </a>
+      <span>Negocios en {site.country}</span>
+    </div>
+
+    <p class="footer__legal">© {year} {site.legalName}</p>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    padding-block: var(--space-8) var(--space-6);
+    background: var(--navy-abyss);
+    color: var(--text-on-dark-soft);
+  }
+
+  .footer__inner {
+    display: grid;
+    gap: var(--space-7);
+  }
+
+  .footer :global(.footer__brand) {
+    width: min(100%, 420px);
+    height: auto;
+  }
+
+  .footer__nav ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3) var(--space-6);
+  }
+
+  .footer a {
+    color: var(--text-on-dark);
+    text-decoration: none;
+  }
+
+  .footer__contact {
+    display: grid;
+    gap: var(--space-1);
+  }
+
+  .footer__whatsapp {
+    width: fit-content;
+    font-size: var(--step-2);
+    font-weight: 600;
+    font-stretch: var(--stretch);
+    letter-spacing: -0.03em;
+  }
+
+  .footer__legal {
+    padding-top: var(--space-5);
+    border-top: 1px solid var(--line-dark);
+    font-size: var(--step--1);
+  }
+
+  @media (min-width: 56rem) {
+    .footer__inner {
+      grid-template-columns: 1.4fr 1fr auto;
+      align-items: end;
+    }
+
+    .footer__legal {
+      grid-column: 1 / -1;
+    }
+  }
+</style>

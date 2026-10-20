@@ -1,0 +1,86 @@
+---
+/**
+ * Acceso flotante a WhatsApp (círculo con ícono) para pantallas angostas, donde la barra no
+ * muestra el botón.
+ * Aparece después de la primera vista y se oculta cuando el contacto ya está en pantalla.
+ */
+import Icon from '@/components/ui/Icon.astro';
+import { whatsappUrl } from '@/config/site';
+---
+
+<a class="dock" href={whatsappUrl} target="_blank" rel="noopener noreferrer" aria-label="Escríbenos por WhatsApp" data-dock>
+  <Icon name="whatsapp" size={26} />
+</a>
+
+<script>
+  const dock = document.querySelector<HTMLElement>('[data-dock]');
+  const hero = document.getElementById('inicio');
+  const contact = document.getElementById('contacto');
+
+  if (dock && hero && 'IntersectionObserver' in window) {
+    let heroVisible = true;
+    let contactVisible = false;
+    const update = () => dock.toggleAttribute('data-visible', !heroVisible && !contactVisible);
+
+    new IntersectionObserver(([entry]) => {
+      heroVisible = Boolean(entry?.isIntersecting);
+      update();
+    }).observe(hero);
+
+    if (contact) {
+      new IntersectionObserver(([entry]) => {
+        contactVisible = Boolean(entry?.isIntersecting);
+        update();
+      }).observe(contact);
+    }
+  } else {
+    dock?.setAttribute('data-visible', '');
+  }
+</script>
+
+<style>
+  .dock {
+    position: fixed;
+    right: max(var(--space-4), env(safe-area-inset-right));
+    bottom: max(var(--space-4), env(safe-area-inset-bottom));
+    z-index: var(--z-header);
+    display: grid;
+    place-items: center;
+    width: 3.5rem;
+    height: 3.5rem;
+    border-radius: 50%;
+    background: var(--action);
+    box-shadow: var(--shadow-float);
+    color: var(--action-ink);
+    text-decoration: none;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(12px) scale(0.96);
+    transition:
+      opacity var(--dur-hover) var(--ease-out),
+      transform var(--dur-hover) var(--ease-out),
+      visibility 0s linear var(--dur-hover);
+  }
+
+  .dock[data-visible] {
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    transition-delay: 0s;
+  }
+
+  .dock:active {
+    transform: scale(0.97);
+  }
+
+  .dock:hover,
+  .dock:focus-visible {
+    color: var(--action-ink);
+  }
+
+  @media (min-width: 60rem) {
+    .dock {
+      display: none;
+    }
+  }
+</style>

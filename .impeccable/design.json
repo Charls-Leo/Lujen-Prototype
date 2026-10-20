@@ -1,0 +1,520 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-19T23:27:53.030Z",
+  "title": "Design System: LUJEN Desarrolladores",
+  "extensions": {
+    "colorMeta": {
+      "deep-navy": {
+        "role": "primary",
+        "displayName": "Tinta Deep Navy",
+        "canonical": "#081a3a",
+        "oklch": "oklch(22.4% 0.067 260.8)",
+        "tonalRamp": [
+          "oklch(15.0% 0.067 260.8)",
+          "oklch(26.0% 0.067 260.8)",
+          "oklch(37.0% 0.067 260.8)",
+          "oklch(48.0% 0.067 260.8)",
+          "oklch(59.0% 0.067 260.8)",
+          "oklch(70.0% 0.067 260.8)",
+          "oklch(82.0% 0.067 260.8)",
+          "oklch(95.0% 0.051 260.8)"
+        ]
+      },
+      "midnight": {
+        "role": "primary",
+        "displayName": "Azul Medianoche",
+        "canonical": "#0d2d8f",
+        "oklch": "oklch(35.2% 0.165 264.6)",
+        "tonalRamp": [
+          "oklch(15.0% 0.111 264.6)",
+          "oklch(26.0% 0.165 264.6)",
+          "oklch(37.0% 0.165 264.6)",
+          "oklch(48.0% 0.165 264.6)",
+          "oklch(59.0% 0.165 264.6)",
+          "oklch(70.0% 0.165 264.6)",
+          "oklch(82.0% 0.127 264.6)",
+          "oklch(95.0% 0.051 264.6)"
+        ]
+      },
+      "electric": {
+        "role": "primary",
+        "displayName": "Azul Eléctrico de Trazo",
+        "canonical": "#176bff",
+        "oklch": "oklch(57.5% 0.233 261.3)",
+        "tonalRamp": [
+          "oklch(15.0% 0.111 261.3)",
+          "oklch(26.0% 0.166 261.3)",
+          "oklch(37.0% 0.204 261.3)",
+          "oklch(48.0% 0.220 261.3)",
+          "oklch(59.0% 0.212 261.3)",
+          "oklch(70.0% 0.182 261.3)",
+          "oklch(82.0% 0.127 261.3)",
+          "oklch(95.0% 0.051 261.3)"
+        ]
+      },
+      "cyan": {
+        "role": "secondary",
+        "displayName": "Cian de Cota",
+        "canonical": "#26c6ff",
+        "oklch": "oklch(77.4% 0.145 229.0)",
+        "tonalRamp": [
+          "oklch(15.0% 0.111 229.0)",
+          "oklch(26.0% 0.145 229.0)",
+          "oklch(37.0% 0.145 229.0)",
+          "oklch(48.0% 0.145 229.0)",
+          "oklch(59.0% 0.145 229.0)",
+          "oklch(70.0% 0.145 229.0)",
+          "oklch(82.0% 0.127 229.0)",
+          "oklch(95.0% 0.051 229.0)"
+        ]
+      },
+      "soft-white": {
+        "role": "neutral",
+        "displayName": "Papel Soft White",
+        "canonical": "#f6f8fc",
+        "oklch": "oklch(97.9% 0.006 264.5)",
+        "tonalRamp": [
+          "oklch(15.0% 0.006 264.5)",
+          "oklch(26.0% 0.006 264.5)",
+          "oklch(37.0% 0.006 264.5)",
+          "oklch(48.0% 0.006 264.5)",
+          "oklch(59.0% 0.006 264.5)",
+          "oklch(70.0% 0.006 264.5)",
+          "oklch(82.0% 0.006 264.5)",
+          "oklch(95.0% 0.006 264.5)"
+        ]
+      },
+      "paper-raised": {
+        "role": "neutral",
+        "displayName": "Papel Alzado",
+        "canonical": "#ffffff",
+        "oklch": "oklch(100.0% 0.000 89.9)",
+        "tonalRamp": [
+          "oklch(15.0% 0.000 89.9)",
+          "oklch(26.0% 0.000 89.9)",
+          "oklch(37.0% 0.000 89.9)",
+          "oklch(48.0% 0.000 89.9)",
+          "oklch(59.0% 0.000 89.9)",
+          "oklch(70.0% 0.000 89.9)",
+          "oklch(82.0% 0.000 89.9)",
+          "oklch(95.0% 0.000 89.9)"
+        ]
+      },
+      "paper-sunken": {
+        "role": "neutral",
+        "displayName": "Papel Hundido",
+        "canonical": "#edf1f9",
+        "oklch": "oklch(95.7% 0.012 264.5)",
+        "tonalRamp": [
+          "oklch(15.0% 0.012 264.5)",
+          "oklch(26.0% 0.012 264.5)",
+          "oklch(37.0% 0.012 264.5)",
+          "oklch(48.0% 0.012 264.5)",
+          "oklch(59.0% 0.012 264.5)",
+          "oklch(70.0% 0.012 264.5)",
+          "oklch(82.0% 0.012 264.5)",
+          "oklch(95.0% 0.012 264.5)"
+        ]
+      },
+      "ink-soft": {
+        "role": "neutral",
+        "displayName": "Tinta Suave",
+        "canonical": "#3c4a66",
+        "oklch": "oklch(40.9% 0.051 263.8)",
+        "tonalRamp": [
+          "oklch(15.0% 0.051 263.8)",
+          "oklch(26.0% 0.051 263.8)",
+          "oklch(37.0% 0.051 263.8)",
+          "oklch(48.0% 0.051 263.8)",
+          "oklch(59.0% 0.051 263.8)",
+          "oklch(70.0% 0.051 263.8)",
+          "oklch(82.0% 0.051 263.8)",
+          "oklch(95.0% 0.051 263.8)"
+        ]
+      },
+      "ink-muted": {
+        "role": "neutral",
+        "displayName": "Tinta Apagada",
+        "canonical": "#5a6680",
+        "oklch": "oklch(51.0% 0.044 265.5)",
+        "tonalRamp": [
+          "oklch(15.0% 0.044 265.5)",
+          "oklch(26.0% 0.044 265.5)",
+          "oklch(37.0% 0.044 265.5)",
+          "oklch(48.0% 0.044 265.5)",
+          "oklch(59.0% 0.044 265.5)",
+          "oklch(70.0% 0.044 265.5)",
+          "oklch(82.0% 0.044 265.5)",
+          "oklch(95.0% 0.044 265.5)"
+        ]
+      },
+      "blueprint-ink": {
+        "role": "neutral",
+        "displayName": "Tinta de Cianotipo",
+        "canonical": "#e9f0ff",
+        "oklch": "oklch(95.4% 0.022 265.8)",
+        "tonalRamp": [
+          "oklch(15.0% 0.022 265.8)",
+          "oklch(26.0% 0.022 265.8)",
+          "oklch(37.0% 0.022 265.8)",
+          "oklch(48.0% 0.022 265.8)",
+          "oklch(59.0% 0.022 265.8)",
+          "oklch(70.0% 0.022 265.8)",
+          "oklch(82.0% 0.022 265.8)",
+          "oklch(95.0% 0.022 265.8)"
+        ]
+      },
+      "blueprint-ink-soft": {
+        "role": "neutral",
+        "displayName": "Tinta de Cianotipo Suave",
+        "canonical": "#a9bbe0",
+        "oklch": "oklch(79.1% 0.056 264.7)",
+        "tonalRamp": [
+          "oklch(15.0% 0.056 264.7)",
+          "oklch(26.0% 0.056 264.7)",
+          "oklch(37.0% 0.056 264.7)",
+          "oklch(48.0% 0.056 264.7)",
+          "oklch(59.0% 0.056 264.7)",
+          "oklch(70.0% 0.056 264.7)",
+          "oklch(82.0% 0.056 264.7)",
+          "oklch(95.0% 0.051 264.7)"
+        ]
+      },
+      "danger": {
+        "role": "error",
+        "displayName": "Rojo de Error",
+        "canonical": "#b0302a",
+        "oklch": "oklch(50.6% 0.166 27.5)",
+        "tonalRamp": [
+          "oklch(15.0% 0.111 27.5)",
+          "oklch(26.0% 0.166 27.5)",
+          "oklch(37.0% 0.166 27.5)",
+          "oklch(48.0% 0.166 27.5)",
+          "oklch(59.0% 0.166 27.5)",
+          "oklch(70.0% 0.166 27.5)",
+          "oklch(82.0% 0.127 27.5)",
+          "oklch(95.0% 0.051 27.5)"
+        ]
+      },
+      "on-action": {
+        "role": "neutral",
+        "displayName": "Blanco sobre Acción",
+        "canonical": "#ffffff",
+        "oklch": "oklch(100.0% 0.000 89.9)",
+        "tonalRamp": [
+          "oklch(15.0% 0.000 89.9)",
+          "oklch(26.0% 0.000 89.9)",
+          "oklch(37.0% 0.000 89.9)",
+          "oklch(48.0% 0.000 89.9)",
+          "oklch(59.0% 0.000 89.9)",
+          "oklch(70.0% 0.000 89.9)",
+          "oklch(82.0% 0.000 89.9)",
+          "oklch(95.0% 0.000 89.9)"
+        ]
+      },
+      "grid-minor": {
+        "role": "neutral",
+        "displayName": "Retícula Menor",
+        "canonical": "rgb(13 45 143 / 0.055)"
+      },
+      "grid-major": {
+        "role": "neutral",
+        "displayName": "Retícula Mayor",
+        "canonical": "rgb(13 45 143 / 0.09)"
+      },
+      "rule": {
+        "role": "neutral",
+        "displayName": "Filete",
+        "canonical": "rgb(8 26 58 / 0.14)"
+      },
+      "rule-strong": {
+        "role": "neutral",
+        "displayName": "Filete Fuerte",
+        "canonical": "rgb(8 26 58 / 0.42)"
+      },
+      "ghost-ink": {
+        "role": "neutral",
+        "displayName": "Tinta Fantasma",
+        "canonical": "rgb(8 26 58 / 0.34)"
+      },
+      "blueprint-rule": {
+        "role": "neutral",
+        "displayName": "Filete de Cianotipo",
+        "canonical": "rgb(38 198 255 / 0.22)"
+      },
+      "blueprint-grid": {
+        "role": "neutral",
+        "displayName": "Retícula de Cianotipo",
+        "canonical": "rgb(38 198 255 / 0.07)"
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Solo el titular del hero; ancho 118 %."
+      },
+      "headline": {
+        "displayName": "Titular de sección",
+        "purpose": "Títulos de sección, máximo 20ch."
+      },
+      "title": {
+        "displayName": "Título de lámina",
+        "purpose": "Títulos de lámina de servicio, pasos del proceso y bloques secundarios."
+      },
+      "title-sm": {
+        "displayName": "Título pequeño",
+        "purpose": "Paneles, pasos del diagnóstico, preguntas frecuentes, nombres de solución."
+      },
+      "lede": {
+        "displayName": "Lede",
+        "purpose": "Bajada de sección en ink-soft, medida 62ch."
+      },
+      "body": {
+        "displayName": "Cuerpo",
+        "purpose": "Texto corrido."
+      },
+      "small": {
+        "displayName": "Nota",
+        "purpose": "Notas, pies y mensajes de error."
+      },
+      "label": {
+        "displayName": "Rótulo técnico",
+        "purpose": "Martian Mono en mayúsculas: solo medidas, referencias, valores y cajetín; nunca antetítulo."
+      }
+    },
+    "shadows": [
+      {
+        "name": "shadow-sheet",
+        "value": "0 1px 1px rgb(8 26 58 / 0.05), 0 4px 10px -6px rgb(8 26 58 / 0.16)",
+        "purpose": "Láminas: servicio, diagnóstico, precios, contacto."
+      },
+      {
+        "name": "shadow-lift",
+        "value": "0 2px 4px rgb(8 26 58 / 0.06), 0 18px 32px -20px rgb(13 45 143 / 0.4)",
+        "purpose": "Elementos flotantes como el dock de WhatsApp."
+      },
+      {
+        "name": "shadow-bar",
+        "value": "0 10px 24px -20px rgb(8 26 58 / 0.4)",
+        "purpose": "Cabecera fija al desplazarse y panel del menú móvil."
+      },
+      {
+        "name": "shadow-action",
+        "value": "0 1px 1px rgb(8 26 58 / 0.1), 0 8px 18px -8px rgb(23 107 255 / 0.55)",
+        "purpose": "Botón primario y envío; se retira al deshabilitar."
+      },
+      {
+        "name": "focus-field",
+        "value": "0 0 0 3px rgb(23 107 255 / 0.2)",
+        "purpose": "Anillo de foco de campos."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-out",
+        "value": "cubic-bezier(0.22, 1, 0.36, 1)",
+        "purpose": "Transiciones de estado."
+      },
+      {
+        "name": "ease-in-out",
+        "value": "cubic-bezier(0.65, 0, 0.35, 1)",
+        "purpose": "Trazado progresivo de líneas y cotas."
+      },
+      {
+        "name": "dur-fast",
+        "value": "160ms",
+        "purpose": "Color, borde, presión."
+      },
+      {
+        "name": "dur-base",
+        "value": "280ms",
+        "purpose": "Paneles, íconos, subrayados."
+      },
+      {
+        "name": "dur-draw",
+        "value": "1100ms",
+        "purpose": "Dibujo de trazos al entrar en pantalla, escalonado 90ms por elemento; desactivado con prefers-reduced-motion."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "xs",
+        "value": "30rem"
+      },
+      {
+        "name": "sm",
+        "value": "40rem"
+      },
+      {
+        "name": "table-stack",
+        "value": "48rem"
+      },
+      {
+        "name": "md",
+        "value": "52rem"
+      },
+      {
+        "name": "split",
+        "value": "56rem"
+      },
+      {
+        "name": "nav",
+        "value": "60rem"
+      },
+      {
+        "name": "lg",
+        "value": "64rem"
+      }
+    ],
+    "sheetTrim": {
+      "length": "14px",
+      "offset": "-9px",
+      "ink": "rgb(8 26 58 / 0.42)",
+      "purpose": "Marcas de corte en las cuatro esquinas de cada lámina."
+    },
+    "paperGrid": {
+      "minor": "24px",
+      "major": "120px",
+      "purpose": "Retícula de fondo de página."
+    }
+  },
+  "components": [
+    {
+      "name": "Botón primario",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Acción principal: escribir por WhatsApp o enviar el diagnóstico.",
+      "html": "<a class=\"ds-btn-primary\" href=\"#\">Escríbenos por WhatsApp <svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.75\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M5 12h14M13 6l6 6-6 6\"/></svg></a>",
+      "css": ".ds-btn-primary { display: inline-flex; align-items: center; justify-content: center; gap: 0.75rem; min-height: 3.25rem; padding-inline: 1.5rem; border: 1.5px solid transparent; border-radius: var(--radius-m, 10px); font-family: var(--font-sans, \"Archivo Variable\", \"Archivo\", system-ui, sans-serif); font-size: 1.0625rem; font-stretch: 108%; font-weight: 650; line-height: 1.1; letter-spacing: -0.005em; text-decoration: none; white-space: nowrap; cursor: pointer; transition: background-color 160ms cubic-bezier(0.22, 1, 0.36, 1), border-color 160ms cubic-bezier(0.22, 1, 0.36, 1), color 160ms cubic-bezier(0.22, 1, 0.36, 1), transform 160ms cubic-bezier(0.22, 1, 0.36, 1); background: var(--action, #176bff); color: var(--on-action, #ffffff); box-shadow: 0 1px 1px rgb(8 26 58 / 0.1), 0 8px 18px -8px rgb(23 107 255 / 0.55); } .ds-btn-primary svg { transition: transform 280ms cubic-bezier(0.22, 1, 0.36, 1); } .ds-btn-primary:hover { background: var(--action-hover, #0d2d8f); } .ds-btn-primary:hover svg { transform: translateX(3px); } .ds-btn-primary:active { transform: scale(0.97); } .ds-btn-primary:focus-visible { outline: 2px solid var(--focus-ring, #176bff); outline-offset: 3px; }"
+    },
+    {
+      "name": "Botón secundario",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Acción alternativa junto a la primaria.",
+      "html": "<a class=\"ds-btn-secondary\" href=\"#\">Haz el diagnóstico</a>",
+      "css": ".ds-btn-secondary { display: inline-flex; align-items: center; justify-content: center; gap: 0.75rem; min-height: 3.25rem; padding-inline: 1.5rem; border: 1.5px solid transparent; border-radius: var(--radius-m, 10px); font-family: var(--font-sans, \"Archivo Variable\", \"Archivo\", system-ui, sans-serif); font-size: 1.0625rem; font-stretch: 108%; font-weight: 650; line-height: 1.1; letter-spacing: -0.005em; text-decoration: none; white-space: nowrap; cursor: pointer; transition: background-color 160ms cubic-bezier(0.22, 1, 0.36, 1), border-color 160ms cubic-bezier(0.22, 1, 0.36, 1), color 160ms cubic-bezier(0.22, 1, 0.36, 1), transform 160ms cubic-bezier(0.22, 1, 0.36, 1); background: var(--paper-raised, #ffffff); border-color: var(--rule-strong, rgb(8 26 58 / 0.42)); color: var(--ink, #081a3a); } .ds-btn-secondary:hover { border-color: var(--ink, #081a3a); } .ds-btn-secondary:active { transform: scale(0.97); } .ds-btn-secondary:focus-visible { outline: 2px solid var(--focus-ring, #176bff); outline-offset: 3px; }"
+    },
+    {
+      "name": "Botón discreto",
+      "kind": "button",
+      "refersTo": "button-quiet",
+      "description": "Enlace de acción con subrayado de cota cian.",
+      "html": "<a class=\"ds-btn-quiet\" href=\"#\">Cotizar por WhatsApp</a>",
+      "css": ".ds-btn-quiet { font-family: var(--font-sans, \"Archivo Variable\", \"Archivo\", system-ui, sans-serif); font-stretch: 108%; font-weight: 650; padding: 0.25rem 0; color: var(--link, #0d2d8f); text-decoration: underline; text-decoration-color: var(--dimension, #26c6ff); text-decoration-thickness: 2px; text-underline-offset: 0.35em; transition: color 160ms cubic-bezier(0.22, 1, 0.36, 1); } .ds-btn-quiet:hover { color: #176bff; } .ds-btn-quiet:focus-visible { outline: 2px solid var(--focus-ring, #176bff); outline-offset: 3px; border-radius: 4px; }"
+    },
+    {
+      "name": "Campo de texto",
+      "kind": "input",
+      "refersTo": "input-field",
+      "description": "Campo del compositor de mensaje en Contacto.",
+      "html": "<label class=\"ds-field\"><span>Tu nombre</span><input placeholder=\"Ej.: Laura\"></label>",
+      "css": ".ds-field { display: grid; gap: 0.5rem; font-family: var(--font-sans, \"Archivo Variable\", \"Archivo\", system-ui, sans-serif); } .ds-field span { font-size: 0.9375rem; font-weight: 600; color: #081a3a; } .ds-field input { padding: 0.75rem 1rem; border: 1px solid var(--rule-strong, rgb(8 26 58 / 0.42)); border-radius: var(--radius-m, 10px); background: var(--paper, #f6f8fc); font: inherit; font-size: 1rem; line-height: 1.5; color: #081a3a; caret-color: #176bff; transition: border-color 160ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 160ms cubic-bezier(0.22, 1, 0.36, 1), background-color 160ms cubic-bezier(0.22, 1, 0.36, 1); } .ds-field input::placeholder { color: #5a6680; opacity: 1; } .ds-field input:focus-visible { outline: none; border-color: #176bff; background: #ffffff; box-shadow: 0 0 0 3px rgb(23 107 255 / 0.2); }"
+    },
+    {
+      "name": "Navegación",
+      "kind": "nav",
+      "refersTo": "navigation",
+      "description": "Enlaces de cabecera con subrayado de cota que crece desde el centro.",
+      "html": "<nav class=\"ds-nav\"><a href=\"#\">Servicios</a><a href=\"#\">Cómo trabajamos</a><a href=\"#\">Precios</a></nav>",
+      "css": ".ds-nav { display: flex; gap: 2rem; font-family: var(--font-sans, \"Archivo Variable\", \"Archivo\", system-ui, sans-serif); } .ds-nav a { position: relative; padding-block: 0.5rem; font-size: 0.9375rem; font-weight: 550; color: #081a3a; text-decoration: none; } .ds-nav a::after { content: \"\"; position: absolute; inset: auto 0 2px; height: 2px; background: var(--dimension, #26c6ff); transform: scaleX(0); transition: transform 280ms cubic-bezier(0.22, 1, 0.36, 1); } .ds-nav a:hover::after, .ds-nav a:focus-visible::after { transform: scaleX(1); } .ds-nav a:focus-visible { outline: 2px solid var(--focus-ring, #176bff); outline-offset: 3px; border-radius: 4px; }"
+    },
+    {
+      "name": "Opción del diagnóstico",
+      "kind": "chip",
+      "refersTo": "symptom-option",
+      "description": "Situación seleccionable con llamada numerada y casilla.",
+      "html": "<label class=\"ds-symptom\"><input type=\"checkbox\" checked><span class=\"ds-callout\">1</span><span>Tengo pocas reseñas en Google</span><span class=\"ds-tick\"></span></label>",
+      "css": ".ds-symptom { position: relative; display: grid; grid-template-columns: 2rem 1fr 1.5rem; align-items: center; gap: 0.75rem; padding: 0.75rem 1rem 0.75rem 0.75rem; border: 1px solid rgb(8 26 58 / 0.14); border-radius: 10px; background: #ffffff; font-family: var(--font-sans, \"Archivo Variable\", \"Archivo\", system-ui, sans-serif); font-size: 0.9875rem; line-height: 1.45; color: #081a3a; cursor: pointer; transition: border-color 160ms cubic-bezier(0.22, 1, 0.36, 1), background-color 160ms cubic-bezier(0.22, 1, 0.36, 1); } .ds-symptom input { position: absolute; inset: 0; opacity: 0; margin: 0; cursor: pointer; } .ds-symptom:hover { border-color: rgb(8 26 58 / 0.42); } .ds-symptom:has(input:focus-visible) { outline: 2px solid #176bff; outline-offset: 2px; } .ds-callout { display: grid; place-items: center; width: 2rem; height: 2rem; border: 1.5px solid rgb(8 26 58 / 0.42); border-radius: 50%; font-family: var(--font-mono, ui-monospace, monospace); font-size: 0.8125rem; font-weight: 600; color: #3c4a66; } .ds-tick { width: 1.5rem; height: 1.5rem; border: 1.5px solid rgb(8 26 58 / 0.42); border-radius: 6px; } .ds-symptom:has(input:checked) { border-color: #176bff; background: rgb(23 107 255 / 0.05); } .ds-symptom:has(input:checked) .ds-callout, .ds-symptom:has(input:checked) .ds-tick { border-color: #176bff; background: #176bff; color: #ffffff; }"
+    },
+    {
+      "name": "Lámina",
+      "kind": "card",
+      "refersTo": "sheet",
+      "description": "Pliego de papel alzado con marcas de corte y cajetín al pie.",
+      "html": "<article class=\"ds-sheet\"><div class=\"ds-sheet__body\"><h3>Que te encuentren, y que te escriban</h3><p>Una página que muestra tu negocio y lleva a WhatsApp.</p></div><dl class=\"ds-sheet__block\"><div><dt>Lámina</dt><dd>01 / 03</dd></div><div><dt>Línea</dt><dd>Digitaliza</dd></div></dl></article>",
+      "css": ".ds-sheet { position: relative; display: grid; border: 1px solid rgb(8 26 58 / 0.42); border-radius: 2px; background: #ffffff; box-shadow: 0 1px 1px rgb(8 26 58 / 0.05), 0 4px 10px -6px rgb(8 26 58 / 0.16); font-family: var(--font-sans, \"Archivo Variable\", \"Archivo\", system-ui, sans-serif); color: #081a3a; } .ds-sheet::after { content: \"\"; position: absolute; inset: -9px; pointer-events: none; background: linear-gradient(rgb(8 26 58 / 0.42), rgb(8 26 58 / 0.42)) top left / 14px 1px, linear-gradient(rgb(8 26 58 / 0.42), rgb(8 26 58 / 0.42)) top left / 1px 14px, linear-gradient(rgb(8 26 58 / 0.42), rgb(8 26 58 / 0.42)) top right / 14px 1px, linear-gradient(rgb(8 26 58 / 0.42), rgb(8 26 58 / 0.42)) top right / 1px 14px, linear-gradient(rgb(8 26 58 / 0.42), rgb(8 26 58 / 0.42)) bottom left / 14px 1px, linear-gradient(rgb(8 26 58 / 0.42), rgb(8 26 58 / 0.42)) bottom left / 1px 14px, linear-gradient(rgb(8 26 58 / 0.42), rgb(8 26 58 / 0.42)) bottom right / 14px 1px, linear-gradient(rgb(8 26 58 / 0.42), rgb(8 26 58 / 0.42)) bottom right / 1px 14px; background-repeat: no-repeat; } .ds-sheet__body { display: grid; gap: 1.5rem; padding: 2rem 1.5rem; } .ds-sheet h3 { margin: 0; font-size: clamp(1.5rem, 1.25rem + 1vw, 2rem); font-stretch: 118%; font-weight: 800; line-height: 1.08; letter-spacing: -0.025em; max-width: 18ch; } .ds-sheet p { margin: 0; color: #3c4a66; } .ds-sheet__block { display: grid; grid-template-columns: repeat(2, 1fr); margin: 0; border-top: 1px solid rgb(8 26 58 / 0.42); } .ds-sheet__block div { display: grid; gap: 2px; padding: 0.75rem 1rem; } .ds-sheet__block div + div { border-inline-start: 1px solid rgb(8 26 58 / 0.14); } .ds-sheet__block dt { font-family: var(--font-mono, \"Martian Mono Variable\", \"Martian Mono\", ui-monospace, monospace); font-size: 0.6875rem; font-stretch: 87.5%; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: #5a6680; } .ds-sheet__block dd { margin: 0; }"
+    },
+    {
+      "name": "Cota",
+      "kind": "custom",
+      "refersTo": "dimension",
+      "description": "Línea de medida cian con remates y rótulo mono centrado.",
+      "html": "<div class=\"ds-dimension\"><span>Digitaliza · Organiza · Automatiza</span></div>",
+      "css": ".ds-dimension { position: relative; display: flex; justify-content: center; align-items: center; height: 1.5rem; max-width: 22rem; color: #3c4a66; } .ds-dimension::before { content: \"\"; position: absolute; inset: 50% 0 auto; height: 1.5px; background: #26c6ff; transform: translateY(-50%); } .ds-dimension::after { content: \"\"; position: absolute; inset: 0; border-inline: 1.5px solid #26c6ff; } .ds-dimension span { position: relative; padding-inline: 0.75rem; background: var(--paper, #f6f8fc); white-space: nowrap; font-family: var(--font-mono, \"Martian Mono Variable\", \"Martian Mono\", ui-monospace, monospace); font-size: 0.6875rem; font-stretch: 87.5%; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; }"
+    },
+    {
+      "name": "Ruta disponible y proyectada",
+      "kind": "custom",
+      "refersTo": "diagnosis-route",
+      "description": "Estaciones del plano propuesto: continuas si están disponibles, punteadas si son proyectadas.",
+      "html": "<ol class=\"ds-route\"><li data-first><i></i><b>Página básica</b></li><li><i></i><b>Automatización en Excel</b></li><li data-projected><i></i><b>Tablero en Power BI</b></li></ol>",
+      "css": ".ds-route { display: grid; gap: 1.5rem; margin: 0; padding: 0; list-style: none; font-family: var(--font-sans, \"Archivo Variable\", \"Archivo\", system-ui, sans-serif); } .ds-route li { position: relative; display: grid; grid-template-columns: 1.125rem 1fr; gap: 1rem; align-items: start; } .ds-route li:not(:last-child)::before { content: \"\"; position: absolute; top: 1.5rem; bottom: calc(-1.5rem + 2px); left: calc(0.5625rem - 1px); border-left: 2px solid #176bff; } .ds-route li:has(+ li[data-projected])::before { border-left-style: dashed; border-left-color: rgb(8 26 58 / 0.34); } .ds-route i { box-sizing: border-box; width: 1.125rem; height: 1.125rem; margin-top: 0.15rem; border: 2px solid #176bff; border-radius: 50%; background: #ffffff; } .ds-route li[data-first] i { background: #176bff; box-shadow: 0 0 0 4px rgb(38 198 255 / 0.3); } .ds-route li[data-projected] i { border-style: dashed; border-color: rgb(8 26 58 / 0.34); background: #f6f8fc; } .ds-route b { font-size: clamp(1.1875rem, 1.1rem + 0.35vw, 1.375rem); font-stretch: 108%; font-weight: 750; line-height: 1.2; letter-spacing: -0.01em; color: #081a3a; } .ds-route li[data-projected] b { color: #3c4a66; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "La lámina de obra",
+    "overview": "El sitio es una lámina de dibujo técnico: papel Soft White con retícula Midnight tenue, tinta Deep Navy para el texto, trazo Electric Blue para lo que existe y cotas Bright Cyan para lo que se mide. Cada superficie se comporta como un pliego impreso: marco, marcas de corte, cajetín, cuadro de cantidades y llamadas de detalle numeradas con su línea guía. Nada es decorativo por sí mismo; cada línea dice algo sobre el estado de lo que dibuja.\n\nLa densidad es la de un plano: mucha información ordenada en celdas con filetes finos, aire generoso entre secciones y una sola tipografía de texto (Archivo) que se ensancha y engorda para los titulares, eco del logotipo. La medida y la referencia se rotulan en Martian Mono, pequeña, en mayúsculas y con cifras tabulares. La profundidad es la del papel sobre la mesa: sombras cortas y suaves, esquinas casi rectas.\n\nEl ritmo de la página es papel claro de principio a fin, con una única excepción en cianotipo (Deep Navy con retícula cian) para el proceso de trabajo. El movimiento es de dibujo: los trazos se trazan al entrar en pantalla y todo se ve completo si el script no corre o el usuario prefiere menos movimiento.",
+    "keyCharacteristics": [
+      "Papel cuadriculado (24px menor, 120px mayor) como fondo de toda la página.",
+      "Línea continua = disponible hoy; línea punteada = proyectado.",
+      "Láminas casi rectas (2px) con marcas de corte en las esquinas; controles con el redondeo del logotipo (6px y 10px).",
+      "Display Archivo expandido (118%) y pesado (800); Martian Mono solo para medidas, referencias y valores.",
+      "Una sola sección oscura: el cianotipo de \"Cómo trabajamos\".",
+      "Llamadas de detalle (círculo numerado) unidas por líneas guía cian al elemento que explican."
+    ],
+    "rules": [
+      {
+        "name": "The Línea Firme Rule",
+        "body": "Lo disponible se dibuja con línea continua y trazo Electric; lo proyectado, con línea punteada en Tinta Fantasma y texto en ink-soft o ink-muted. Esta distinción se mantiene en escalera, diagnóstico, hoja de ruta y bordes: nunca se usa punteado como adorno.",
+        "section": "colors"
+      },
+      {
+        "name": "The Una Sola Noche Rule",
+        "body": "El cianotipo (Deep Navy con retícula cian a 24px) aparece una vez por página y solo para el proceso de trabajo. Todo lo demás es papel claro.",
+        "section": "colors"
+      },
+      {
+        "name": "The Cota No Rellena Rule",
+        "body": "El cian mide y señala (líneas de 1.5px, puntos, halos); no es fondo de superficie ni color de texto corrido sobre papel.",
+        "section": "colors"
+      },
+      {
+        "name": "The Mono Mide Rule",
+        "body": "Martian Mono solo rotula medidas, referencias, valores, numeración y celdas de cajetín. Nunca va como antetítulo encima de un titular ni como texto de párrafo.",
+        "section": "typography"
+      },
+      {
+        "name": "The Sin Antetítulo Rule",
+        "body": "Los títulos de sección empiezan con el titular; no llevan rótulo, categoría ni numeración encima.",
+        "section": "typography"
+      },
+      {
+        "name": "The Ancho Es Peso Rule",
+        "body": "La jerarquía se marca ensanchando (118 % display, 108 % títulos menores y botones) además de engordar; no se usa otra familia de display.",
+        "section": "typography"
+      },
+      {
+        "name": "The Papel Corto Rule",
+        "body": "Las láminas llevan solo la sombra de lámina; nada de sombras largas, duras o desplazadas sin desenfoque.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "**Do** dibujar lo disponible con línea continua Electric y lo proyectado con línea punteada en Tinta Fantasma, en todo componente que muestre estado.",
+      "**Do** apoyar cada lámina en papel alzado con radio de 2px, borde de 1px en filete fuerte, sombra de lámina y marcas de corte.",
+      "**Do** anclar cada anotación con una línea guía cian al elemento exacto que explica.",
+      "**Do** reservar Martian Mono (0.6875rem, 500, ancho 87.5 %, 0.06em, mayúsculas, cifras tabulares) para medidas, referencias, valores y celdas de cajetín.",
+      "**Do** usar Archivo a 800 y ancho 118 % para titulares, con interletrado negativo.",
+      "**Do** dejar visible el estado final de todo trazado animado cuando no hay script o se prefiere menos movimiento."
+    ],
+    "donts": [
+      "**Don't** poner antetítulos, categorías ni numeración en mono encima de un titular.",
+      "**Don't** usar línea punteada como adorno: siempre significa proyectado.",
+      "**Don't** añadir una segunda sección oscura; el cianotipo es solo para el proceso.",
+      "**Don't** redondear las láminas como tarjetas de interfaz ni usar sombras duras o desplazadas sin desenfoque.",
+      "**Don't** rellenar superficies con cian ni componer párrafos en Martian Mono.",
+      "**Don't** usar íconos de fuente o glifos; los íconos son SVG de trazo 1.75 sobre retícula de 24px."
+    ]
+  }
+}

@@ -1,0 +1,156 @@
+---
+/**
+ * Cursor propio para punteros finos: un punto que sigue al mouse con inercia, crece sobre
+ * lo interactivo (modo diferencia) y muestra una etiqueta sobre [data-cursor="Texto"].
+ * En táctil, con movimiento reducido o sin JavaScript se queda el cursor del sistema.
+ */
+---
+
+<div class="cursor" aria-hidden="true" data-cursor-root>
+  <span class="cursor__dot"></span>
+  <span class="cursor__label" data-cursor-label></span>
+</div>
+
+<script>
+  const root = document.querySelector<HTMLElement>('[data-cursor-root]');
+  const label = root?.querySelector<HTMLElement>('[data-cursor-label]');
+  const fine = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (root && label && fine && !reduceMotion) {
+    const INTERACTIVE = 'a, button, summary, label, [data-cursor]';
+    const FOLLOW = 0.2; // fracción de la distancia recorrida por fotograma
+    const target = { x: -100, y: -100 };
+    const position = { x: -100, y: -100 };
+    let frame = 0;
+
+    document.documentElement.classList.add('has-cursor');
+
+    const tick = () => {
+      position.x += (target.x - position.x) * FOLLOW;
+      position.y += (target.y - position.y) * FOLLOW;
+      root.style.transform = `translate3d(${position.x}px, ${position.y}px, 0)`;
+      const settled = Math.abs(target.x - position.x) < 0.1 && Math.abs(target.y - position.y) < 0.1;
+      frame = settled ? 0 : requestAnimationFrame(tick);
+    };
+
+    window.addEventListener(
+      'pointermove',
+      (event) => {
+        if (event.pointerType !== 'mouse') return;
+        target.x = event.clientX;
+        target.y = event.clientY;
+        root.dataset.visible = '';
+        if (!frame) frame = requestAnimationFrame(tick);
+      },
+      { passive: true },
+    );
+
+    document.addEventListener('pointerleave', () => delete root.dataset.visible);
+
+    document.addEventListener('pointerover', (event) => {
+      const element = (event.target as Element | null)?.closest<HTMLElement>(INTERACTIVE);
+      const text = element?.dataset.cursor ?? '';
+      root.dataset.state = text ? 'label' : element ? 'hover' : '';
+      label.textContent = text;
+    });
+
+    document.addEventListener('pointerdown', () => root.toggleAttribute('data-pressed', true));
+    document.addEventListener('pointerup', () => root.toggleAttribute('data-pressed', false));
+  }
+</script>
+
+<style>
+  .cursor {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: var(--z-cursor);
+    display: none;
+    pointer-events: none;
+    /* La mezcla va en el elemento fijo: así invierte lo que hay debajo en la página. */
+    mix-blend-mode: difference;
+  }
+
+  .cursor[data-state='label'] {
+    mix-blend-mode: normal;
+  }
+
+  :global(.has-cursor) .cursor {
+    display: block;
+  }
+
+  /* El punto reemplaza la flecha; en campos de texto vuelve el cursor de escritura. */
+  :global(.has-cursor),
+  :global(.has-cursor *) {
+    cursor: none;
+  }
+
+  :global(.has-cursor input),
+  :global(.has-cursor textarea) {
+    cursor: text;
+  }
+
+  .cursor__dot,
+  .cursor__label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    translate: -50% -50%;
+    border-radius: 50%;
+  }
+
+  .cursor__dot {
+    width: 0.75rem;
+    height: 0.75rem;
+    background: var(--white);
+    opacity: 0;
+    scale: 1;
+    transition:
+      scale 450ms var(--ease-out),
+      opacity 250ms var(--ease-out);
+  }
+
+  .cursor[data-visible] .cursor__dot {
+    opacity: 1;
+  }
+
+  .cursor[data-state='hover'] .cursor__dot {
+    scale: 4.5;
+  }
+
+  .cursor[data-pressed] .cursor__dot {
+    scale: 0.7;
+  }
+
+  .cursor[data-state='hover'][data-pressed] .cursor__dot {
+    scale: 3.8;
+  }
+
+  /* Etiqueta: un círculo azul con una palabra, para medios y tarjetas que se exploran. */
+  .cursor__label {
+    display: grid;
+    place-items: center;
+    width: 5.5rem;
+    height: 5.5rem;
+    background: var(--brand-electric);
+    color: var(--white);
+    font-size: var(--step--1);
+    font-weight: 600;
+    font-stretch: var(--stretch);
+    opacity: 0;
+    scale: 0.4;
+    transition:
+      scale 450ms var(--ease-out),
+      opacity 250ms var(--ease-out);
+  }
+
+  .cursor[data-state='label'] .cursor__label {
+    opacity: 1;
+    scale: 1;
+  }
+
+  .cursor[data-state='label'] .cursor__dot {
+    opacity: 0;
+  }
+</style>

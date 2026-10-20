@@ -1,0 +1,100 @@
+/*
+ * Tokens del sistema visual de LUJEN (v2: minimalismo expresivo).
+ * Único lugar donde viven colores, tipografía, espacios, radios, sombras y movimiento.
+ * Los componentes consumen roles (--surface-*, --text-*), no valores crudos.
+ */
+:root {
+  /* Paleta de marca */
+  --brand-deep-navy: #081a3a;
+  --brand-midnight: #0d2d8f;
+  --brand-electric: #176bff;
+  --brand-cyan: #26c6ff;
+  --brand-soft-white: #f6f8fc;
+
+  /* Extensión de la paleta */
+  --navy-abyss: #040d20; /* el fondo más profundo: pie y resplandor final */
+  --mist: #e6ecf7; /* superficie clara teñida: bandas plegadas, chips */
+  --mist-strong: #d9e2f2; /* hover sobre mist */
+  --white: #ffffff;
+  /* El degradado de la N del logotipo */
+  --gradient-brand: linear-gradient(135deg, #26c6ff 0%, #176bff 52%, #0d2d8f 100%);
+
+  /* Habitación clara */
+  --surface-light: var(--brand-soft-white);
+  --text: var(--brand-deep-navy);
+  --text-soft: #3c4a66; /* 8.4:1 sobre Soft White */
+  --text-muted: #5a6680; /* 5.4:1 */
+  --line-light: rgb(8 26 58 / 0.12);
+
+  /* Habitación oscura */
+  --surface-dark: var(--brand-deep-navy);
+  --text-on-dark: #eef3ff;
+  --text-on-dark-soft: #a9bbe0; /* 8.9:1 sobre Deep Navy */
+  --line-dark: rgb(169 187 224 / 0.18);
+
+  /* Momento azul (método) */
+  --surface-blue: var(--brand-electric);
+  --text-on-blue: #ffffff; /* 4.6:1 */
+
+  /* Acción */
+  --action: var(--brand-electric);
+  --action-ink: #ffffff;
+  --action-hover: var(--brand-deep-navy);
+  --focus-ring: var(--brand-electric);
+  --selection: rgb(38 198 255 / 0.3);
+  --danger: #ff8a7a; /* sobre fondos oscuros */
+
+  /* Tipografía: una familia, jerarquía por tamaño */
+  --font-sans: 'Archivo Variable', 'Archivo', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --stretch: 110%;
+  --weight-regular: 400;
+  --weight-strong: 650;
+
+  --step--1: 0.875rem;
+  --step-0: clamp(1.0625rem, 1rem + 0.25vw, 1.1875rem);
+  --step-1: clamp(1.25rem, 1.1rem + 0.6vw, 1.5rem);
+  --step-2: clamp(1.75rem, 1.35rem + 1.7vw, 2.75rem);
+  --step-3: clamp(2.5rem, 1.6rem + 3.8vw, 4.75rem);
+  --step-4: clamp(3.25rem, 1.6rem + 6.6vw, 7.5rem);
+
+  /* Espacio */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4.5rem;
+  --space-9: 7rem;
+  --section-space: clamp(5.5rem, 3rem + 9vw, 11rem);
+
+  /* Retícula */
+  --page-max: 86rem;
+  --gutter: clamp(1.25rem, 0.5rem + 3vw, 3.5rem);
+  --measure: 46ch;
+  --header-h: 5rem;
+
+  /* Forma: paneles amplios, medios redondeados, acciones en píldora */
+  --radius-panel: clamp(1.75rem, 0.5rem + 4.5vw, 4.5rem);
+  --radius-media: clamp(1.25rem, 0.75rem + 1.5vw, 2rem);
+  --radius-s: 0.75rem;
+  --radius-pill: 999px;
+
+  /* Profundidad: la da el cambio de superficie; sombra solo en lo que flota */
+  --shadow-float: 0 18px 40px -18px rgb(4 13 32 / 0.45);
+
+  /* Movimiento */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1); /* expo-out: entradas y respuestas */
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1); /* movimientos en pantalla */
+  --ease-panel: cubic-bezier(0.4, 0, 0, 1); /* bandas que se expanden */
+  --dur-press: 160ms;
+  --dur-hover: 400ms;
+  --dur-reveal: 1000ms;
+  --dur-panel: 700ms;
+
+  /* Capas */
+  --z-header: 50;
+  --z-menu: 60;
+  --z-cursor: 80;
+}

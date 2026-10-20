@@ -1,0 +1,49 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Button from '@/components/ui/Button.astro';
+import { whatsappUrl } from '@/config/site';
+---
+
+<BaseLayout title="Página no encontrada — Lujen" description="Esta página no existe." noindex>
+  <section class="room not-found" aria-labelledby="not-found-title">
+    <div class="container not-found__inner">
+      <p class="not-found__code" aria-hidden="true">404</p>
+      <h1 class="heading" id="not-found-title" data-reveal="lines">
+        <span class="line"><span>Esta página </span></span>
+        <span class="line" style="--i: 1"><span>se nos escapó.</span></span>
+      </h1>
+      <p class="lede not-found__lede">El enlace puede estar mal escrito o la página ya no existe.</p>
+      <div class="not-found__actions">
+        <Button label="Volver al inicio" href="/" iconEnd="arrow-up-right" />
+        <Button label="Escribir por WhatsApp" href={whatsappUrl} external variant="ghost" icon="whatsapp" />
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .not-found__inner {
+    display: grid;
+    justify-items: start;
+    gap: var(--space-6);
+  }
+
+  .not-found__code {
+    font-size: clamp(6rem, 3rem + 14vw, 14rem);
+    font-weight: 650;
+    font-stretch: var(--stretch);
+    line-height: 0.85;
+    letter-spacing: -0.06em;
+    color: var(--brand-electric);
+  }
+
+  .not-found__lede {
+    color: var(--text-soft);
+  }
+
+  .not-found__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+  }
+</style>

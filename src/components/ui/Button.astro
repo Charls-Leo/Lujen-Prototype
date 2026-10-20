@@ -1,0 +1,168 @@
+---
+/**
+ * Botón píldora del sistema. Con `href` es un enlace; sin él, un <button>.
+ * Al pasar el cursor: un relleno sube desde abajo, el texto rueda y el botón sigue
+ * levemente al puntero (data-magnetic, ver src/scripts/magnetic.ts).
+ *
+ * Variantes: primary (azul eléctrico), light (blanco, para fondos oscuros o azules),
+ * ghost (contorno en el color del texto).
+ */
+import Icon, { type IconName } from './Icon.astro';
+import type { HTMLAttributes } from 'astro/types';
+
+type Variant = 'primary' | 'light' | 'ghost';
+
+type Props = {
+  label: string;
+  variant?: Variant;
+  href?: string;
+  icon?: IconName;
+  iconEnd?: IconName;
+  external?: boolean;
+  type?: 'button' | 'submit';
+  size?: 'm' | 'l';
+  class?: string;
+} & Omit<HTMLAttributes<'a'>, 'type' | 'class'>;
+
+const {
+  label,
+  variant = 'primary',
+  href,
+  icon,
+  iconEnd,
+  external = false,
+  type = 'button',
+  size = 'm',
+  class: className,
+  ...attrs
+} = Astro.props;
+
+const classes = ['btn', `btn--${variant}`, `btn--${size}`, 'has-roll', className];
+const externalAttrs = external ? { target: '_blank', rel: 'noopener noreferrer' } : {};
+const Tag = href ? 'a' : 'button';
+const tagAttrs = href ? { href, ...externalAttrs } : { type };
+---
+
+<Tag class:list={classes} data-magnetic {...tagAttrs} {...attrs as Record<string, unknown>}>
+  <span class="btn__fill" aria-hidden="true"></span>
+  {icon && <Icon name={icon} class="btn__icon" />}
+  <span class="roll"><span data-text={label}>{label}</span></span>
+  {iconEnd && <Icon name={iconEnd} class="btn__icon btn__icon--end" />}
+</Tag>
+
+<style>
+  .btn {
+    --btn-bg: var(--action);
+    --btn-ink: var(--action-ink);
+    --btn-fill: var(--action-hover);
+    --btn-ink-hover: var(--action-ink);
+    --btn-border: transparent;
+    position: relative;
+    isolation: isolate;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-3);
+    min-height: 3.5rem;
+    padding-inline: var(--space-6);
+    overflow: hidden;
+    border: 1.5px solid var(--btn-border);
+    border-radius: var(--radius-pill);
+    background: var(--btn-bg);
+    color: var(--btn-ink);
+    font-size: var(--step-0);
+    font-weight: 600;
+    font-stretch: var(--stretch);
+    line-height: 1;
+    text-decoration: none;
+    white-space: nowrap;
+    user-select: none;
+    transition:
+      color var(--dur-hover) var(--ease-out),
+      border-color var(--dur-hover) var(--ease-out),
+      transform 600ms var(--ease-out),
+      translate 600ms var(--ease-out);
+  }
+
+  .btn--l {
+    min-height: 4.25rem;
+    padding-inline: var(--space-7);
+    font-size: var(--step-1);
+  }
+
+  .btn--light {
+    --btn-bg: var(--white);
+    --btn-ink: var(--brand-deep-navy);
+    --btn-fill: var(--brand-electric);
+    --btn-ink-hover: var(--white);
+  }
+
+  .btn--ghost {
+    --btn-bg: transparent;
+    --btn-ink: currentColor;
+    --btn-fill: currentColor;
+    --btn-border: currentColor;
+  }
+
+  /* El relleno: un círculo centrado en el borde inferior que crece hasta cubrir la píldora. */
+  .btn__fill {
+    position: absolute;
+    z-index: -1;
+    top: 100%;
+    left: 50%;
+    width: 160%;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: var(--btn-fill);
+    transform: translate(-50%, -50%) scale(0);
+    transition: transform 650ms var(--ease-out);
+  }
+
+  .btn :global(.btn__icon) {
+    width: 1.25em;
+    height: 1.25em;
+  }
+
+  .btn :global(.btn__icon--end) {
+    transition: transform var(--dur-hover) var(--ease-out);
+  }
+
+  .btn:active {
+    transform: scale(0.97);
+    transition-duration: var(--dur-press);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .btn:hover {
+      color: var(--btn-ink-hover);
+    }
+
+    .btn:hover .btn__fill {
+      transform: translate(-50%, -50%) scale(1);
+    }
+
+    .btn--ghost:hover {
+      color: var(--surface-light);
+    }
+
+    :global(.room--dark) .btn--ghost:hover,
+    :global(.room--blue) .btn--ghost:hover {
+      color: var(--brand-deep-navy);
+    }
+
+    .btn:hover :global(.btn__icon--end) {
+      transform: translate(2px, -2px);
+    }
+  }
+
+  .btn:focus-visible {
+    outline-offset: 4px;
+    border-radius: var(--radius-pill);
+  }
+
+  .btn[aria-disabled='true'],
+  .btn:disabled {
+    opacity: 0.4;
+    pointer-events: none;
+  }
+</style>

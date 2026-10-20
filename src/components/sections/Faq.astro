@@ -1,0 +1,128 @@
+---
+/**
+ * Preguntas frecuentes con <details> nativo (accesible, sin JavaScript). Donde el navegador
+ * lo permite, el contenido se abre animando su altura.
+ */
+import Icon from '@/components/ui/Icon.astro';
+import { faq } from '@/data/faq';
+---
+
+<section class="room room--lift faq" id="preguntas" aria-labelledby="preguntas-title">
+  <div class="container faq__layout">
+    <h2 class="heading faq__title" id="preguntas-title" data-reveal="lines">
+      <span class="line"><span>Preguntas</span></span>
+    </h2>
+
+    <div class="faq__list">
+      {
+        faq.map((item, index) => (
+          <details class="faq__item" name="faq" data-reveal="fade" style={`--i: ${index}`}>
+            <summary>
+              <span>{item.question}</span>
+              <span class="faq__icon" aria-hidden="true">
+                <Icon name="plus" size={20} />
+              </span>
+            </summary>
+            <p>{item.answer}</p>
+          </details>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .faq__title {
+    margin-bottom: var(--space-7);
+  }
+
+  .faq__item {
+    border-bottom: 1px solid var(--line-light);
+  }
+
+  .faq__item summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-5);
+    padding-block: var(--space-5);
+    font-size: var(--step-1);
+    font-weight: 600;
+    font-stretch: var(--stretch);
+    line-height: 1.25;
+    letter-spacing: -0.015em;
+    list-style: none;
+  }
+
+  .faq__item summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq__icon {
+    display: grid;
+    flex-shrink: 0;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 50%;
+    background: var(--mist);
+    transition:
+      rotate 500ms var(--ease-out),
+      background-color var(--dur-hover) var(--ease-out),
+      color var(--dur-hover) var(--ease-out);
+  }
+
+  .faq__item[open] .faq__icon {
+    rotate: 45deg;
+    background: var(--brand-deep-navy);
+    color: var(--white);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .faq__item summary:hover .faq__icon {
+      background: var(--brand-electric);
+      color: var(--white);
+    }
+  }
+
+  .faq__item p {
+    max-width: var(--measure);
+    padding-bottom: var(--space-5);
+    color: var(--text-soft);
+  }
+
+  /* Apertura animada (navegadores con ::details-content). */
+  @media (prefers-reduced-motion: no-preference) {
+    @supports selector(::details-content) {
+      .faq__item {
+        interpolate-size: allow-keywords;
+      }
+
+      .faq__item::details-content {
+        block-size: 0;
+        overflow: clip;
+        transition:
+          block-size 500ms var(--ease-out),
+          content-visibility 500ms allow-discrete;
+      }
+
+      .faq__item[open]::details-content {
+        block-size: auto;
+      }
+    }
+  }
+
+  @media (min-width: 60rem) {
+    .faq__layout {
+      display: grid;
+      grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.4fr);
+      gap: var(--space-8);
+      align-items: start;
+    }
+
+    .faq__title {
+      position: sticky;
+      top: var(--space-7);
+    }
+  }
+</style>

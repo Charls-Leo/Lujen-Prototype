@@ -1,0 +1,79 @@
+---
+/**
+ * Documento base: <head>, fuente autoalojada, estilos globales, cabecera, pie y
+ * los comportamientos de puntero compartidos (cursor, magnetismo, revelados).
+ * Las páginas solo aportan su contenido en el slot principal.
+ */
+import '@fontsource-variable/archivo/wdth.css';
+import '@/styles/global.css';
+import archivoLatin from '@fontsource-variable/archivo/files/archivo-latin-wdth-normal.woff2?url';
+
+import SeoHead from '@/components/layout/SeoHead.astro';
+import SiteHeader from '@/components/layout/SiteHeader.astro';
+import SiteFooter from '@/components/layout/SiteFooter.astro';
+import WhatsAppDock from '@/components/layout/WhatsAppDock.astro';
+import Cursor from '@/components/layout/Cursor.astro';
+import { site } from '@/config/site';
+
+interface Props {
+  title?: string;
+  description?: string;
+  noindex?: boolean;
+}
+
+const { title, description, noindex } = Astro.props;
+---
+
+<!doctype html>
+<html lang={site.locale}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="preload" href={archivoLatin} as="font" type="font/woff2" crossorigin />
+    <SeoHead title={title} description={description} noindex={noindex} />
+    <script is:inline>
+      document.documentElement.classList.add('js');
+    </script>
+  </head>
+  <body>
+    <a class="skip-link" href="#contenido">Saltar al contenido</a>
+    <SiteHeader />
+    <main id="contenido" tabindex="-1">
+      <slot />
+    </main>
+    <SiteFooter />
+    <WhatsAppDock />
+    <Cursor />
+    <script>
+      import { observeReveals } from '@/scripts/reveal';
+      import { enableMagnetic } from '@/scripts/magnetic';
+      observeReveals();
+      enableMagnetic();
+    </script>
+  </body>
+</html>
+
+<style>
+  .skip-link {
+    position: fixed;
+    top: var(--space-3);
+    left: var(--space-3);
+    z-index: calc(var(--z-menu) + 2);
+    padding: var(--space-2) var(--space-4);
+    border-radius: var(--radius-pill);
+    background: var(--brand-deep-navy);
+    color: var(--white);
+    font-weight: 600;
+    text-decoration: none;
+    transform: translateY(-200%);
+    transition: transform 300ms var(--ease-out);
+  }
+
+  .skip-link:focus-visible {
+    transform: none;
+  }
+
+  main:focus {
+    outline: none;
+  }
+</style>

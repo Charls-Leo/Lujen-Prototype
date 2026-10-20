@@ -1,0 +1,65 @@
+---
+/**
+ * Declaración: una sola frase grande que se ilumina palabra por palabra mientras se recorre
+ * (CSS scroll-driven; donde no hay soporte, el texto se ve completo).
+ */
+const statement =
+  'Encontramos dónde se le escapa tiempo o dinero a tu negocio y lo resolvemos con la herramienta justa.';
+const words = statement.split(' ');
+---
+
+<section class="room statement" aria-label="Qué hacemos">
+  <div class="container">
+    <p class="statement__text" style={`--n: ${words.length}`}>
+      {
+        words.map((word, index) => (
+          <>
+            <span class="statement__word" style={`--k: ${index}`}>
+              {word}
+            </span>{' '}
+          </>
+        ))
+      }
+    </p>
+  </div>
+</section>
+
+<style>
+  .statement {
+    padding-block: var(--space-8) var(--section-space);
+  }
+
+  .statement__text {
+    max-width: 22ch;
+    font-size: var(--step-3);
+    font-weight: 600;
+    font-stretch: var(--stretch);
+    line-height: 1.04;
+    letter-spacing: -0.035em;
+    text-wrap: balance;
+    view-timeline-name: --statement;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    @supports (animation-timeline: view()) {
+      .statement__word {
+        opacity: 0.16;
+        animation: word-on linear both;
+      }
+
+      /* animation-timeline va en una regla aparte (más específica): si comparte regla con el atajo
+         `animation`, el minificador los fusiona en una declaración inválida y la animación se pierde. */
+      .statement__text > .statement__word {
+        animation-timeline: --statement;
+        /* Cada palabra se enciende en su propio tramo del recorrido. */
+        animation-range: cover calc(18% + var(--k) / var(--n) * 34%) cover calc(22% + var(--k) / var(--n) * 34%);
+      }
+    }
+  }
+
+  @keyframes word-on {
+    to {
+      opacity: 1;
+    }
+  }
+</style>

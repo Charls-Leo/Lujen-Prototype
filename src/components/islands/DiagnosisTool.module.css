@@ -1,0 +1,439 @@
+/* Diagnóstico rápido, sobre la habitación oscura: opciones a la izquierda, ruta a la derecha. */
+
+.tool {
+  position: relative;
+  display: grid;
+  gap: var(--space-7);
+}
+
+.panelTitle {
+  font-size: var(--step-1);
+  font-weight: 600;
+  font-stretch: var(--stretch);
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+}
+
+.instruction,
+.hint {
+  font-size: var(--step--1);
+  color: var(--text-on-dark-soft);
+}
+
+/* ---------- Situaciones ---------- */
+.symptoms {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: 0;
+  border: 0;
+}
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-2);
+  width: 100%;
+  padding: 0;
+  margin-bottom: var(--space-5);
+  float: left; /* hace que el legend se comporte como un bloque normal dentro del fieldset */
+}
+
+.legend + * {
+  clear: both;
+}
+
+.symptomList {
+  display: grid;
+  gap: var(--space-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.symptom {
+  position: relative;
+  display: grid;
+  grid-template-columns: 2.25rem 1fr 1.5rem;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-4) var(--space-5) var(--space-4) var(--space-4);
+  border: 1px solid var(--line-dark);
+  border-radius: var(--radius-media);
+  background: rgb(255 255 255 / 0.04);
+  color: var(--text-on-dark);
+  transition:
+    background-color 350ms var(--ease-out),
+    border-color 350ms var(--ease-out),
+    transform var(--dur-press) var(--ease-out);
+}
+
+.symptom:active {
+  transform: scale(0.985);
+}
+
+.symptom:has(.checkbox:focus-visible) {
+  outline: 2px solid var(--brand-cyan);
+  outline-offset: 3px;
+}
+
+.symptom[data-checked='true'] {
+  border-color: var(--brand-electric);
+  background: var(--brand-electric);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .symptom:hover {
+    background: rgb(255 255 255 / 0.08);
+  }
+
+  .symptom[data-checked='true']:hover {
+    background: var(--brand-electric);
+  }
+}
+
+.checkbox {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+}
+
+.callout {
+  display: grid;
+  place-items: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border: 1px solid var(--line-dark);
+  border-radius: 50%;
+  font-size: var(--step--1);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-on-dark-soft);
+  transition:
+    background-color 350ms var(--ease-out),
+    border-color 350ms var(--ease-out),
+    color 350ms var(--ease-out);
+}
+
+.symptom[data-checked='true'] .callout {
+  border-color: var(--white);
+  background: var(--white);
+  color: var(--brand-electric);
+}
+
+.statement {
+  font-size: var(--step-0);
+  line-height: 1.4;
+}
+
+.tick {
+  width: 1.5rem;
+  height: 1.5rem;
+  fill: none;
+  stroke: var(--white);
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 24;
+  stroke-dashoffset: 24;
+  transition: stroke-dashoffset 450ms var(--ease-out);
+}
+
+.symptom[data-checked='true'] .tick {
+  stroke-dashoffset: 0;
+}
+
+.escape {
+  margin-top: var(--space-5);
+  font-size: var(--step--1);
+  color: var(--text-on-dark-soft);
+}
+
+.escape a {
+  font-weight: 600;
+  color: var(--text-on-dark);
+}
+
+/* ---------- Ruta ---------- */
+.plan {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  min-width: 0;
+  padding: clamp(var(--space-5), 3vw, var(--space-7));
+  border-radius: var(--radius-media);
+  background: rgb(255 255 255 / 0.05);
+}
+
+.planHeader {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-bottom: var(--space-6);
+}
+
+.route {
+  display: grid;
+  gap: var(--space-5);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  align-content: start;
+}
+
+.stop {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1.125rem 1fr;
+  gap: var(--space-4);
+}
+
+.connector {
+  position: absolute;
+  top: 1.6rem;
+  bottom: calc(-1 * var(--space-5) + 2px);
+  left: calc(1.125rem / 2 - 1px);
+  border-left: 2px solid var(--brand-cyan);
+  transform-origin: top;
+}
+
+.stop:last-child .connector {
+  display: none;
+}
+
+/* El tramo hacia algo que viene se dibuja punteado. */
+.stop:has(+ .stop[data-available='false']) .connector {
+  border-left-style: dashed;
+  border-left-color: var(--line-dark);
+}
+
+.marker {
+  position: relative;
+  width: 1.125rem;
+  height: 1.125rem;
+  margin-top: 0.3rem;
+  border: 2px solid var(--brand-cyan);
+  border-radius: 50%;
+  background: var(--surface-dark);
+}
+
+.stop[data-first='true'] .marker {
+  background: var(--brand-cyan);
+  box-shadow: 0 0 0 6px rgb(38 198 255 / 0.18);
+}
+
+.stop[data-available='false'] .marker {
+  border-style: dashed;
+  border-color: var(--text-on-dark-soft);
+}
+
+.stopBody {
+  display: grid;
+  gap: var(--space-1);
+}
+
+.stopName {
+  font-size: var(--step-1);
+  font-weight: 600;
+  font-stretch: var(--stretch);
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+
+.stop[data-available='false'] .stopName {
+  color: var(--text-on-dark-soft);
+}
+
+.stopSummary {
+  max-width: 40ch;
+  font-size: var(--step--1);
+  line-height: 1.45;
+  color: var(--text-on-dark-soft);
+}
+
+.stopSoon {
+  width: fit-content;
+  margin-top: var(--space-1);
+  padding: 0.15rem var(--space-3);
+  border: 1px dashed var(--text-on-dark-soft);
+  border-radius: var(--radius-pill);
+  font-size: 0.8125rem;
+  color: var(--text-on-dark-soft);
+}
+
+.stopMeta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  margin-top: var(--space-2);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--text-on-dark-soft);
+}
+
+.answers {
+  display: inline-flex;
+  gap: var(--space-1);
+}
+
+.answer {
+  display: grid;
+  place-items: center;
+  width: 1.375rem;
+  height: 1.375rem;
+  border: 1.5px solid var(--brand-cyan);
+  border-radius: 50%;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-on-dark);
+}
+
+/* Líneas guía: de cada situación marcada al paso que la resuelve. */
+.leaders {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.leaderPath {
+  fill: none;
+  stroke: var(--brand-cyan);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+}
+
+.leaderDot {
+  fill: var(--brand-cyan);
+}
+
+/* Estado vacío: la ruta en fantasma. */
+.empty {
+  display: grid;
+  grid-template-columns: 4.5rem 1fr;
+  align-items: center;
+  gap: var(--space-5);
+  color: var(--text-on-dark-soft);
+}
+
+.emptyDrawing {
+  width: 4.5rem;
+  fill: var(--surface-dark);
+  stroke: var(--text-on-dark-soft);
+  stroke-opacity: 0.5;
+  stroke-width: 2;
+  stroke-dasharray: 5 5;
+  stroke-linecap: round;
+}
+
+.empty p {
+  max-width: 26ch;
+}
+
+.planFooter {
+  display: grid;
+  gap: var(--space-3);
+  margin-top: var(--space-7);
+}
+
+.send {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  min-height: 3.5rem;
+  padding-inline: var(--space-6);
+  border-radius: var(--radius-pill);
+  background: var(--brand-electric);
+  color: var(--white);
+  font-weight: 600;
+  font-stretch: var(--stretch);
+  text-align: center;
+  text-decoration: none;
+  transition:
+    background-color var(--dur-hover) var(--ease-out),
+    color var(--dur-hover) var(--ease-out),
+    transform var(--dur-press) var(--ease-out),
+    opacity var(--dur-hover) var(--ease-out);
+}
+
+.send:active {
+  transform: scale(0.97);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .send:hover {
+    background: var(--white);
+    color: var(--brand-deep-navy);
+  }
+}
+
+.send[aria-disabled='true'] {
+  opacity: 0.35;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.sendIcon {
+  width: 1.25rem;
+  height: 1.25rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.75;
+  stroke-linejoin: round;
+}
+
+.footnote {
+  font-size: var(--step--1);
+  color: var(--text-on-dark-soft);
+}
+
+.preview summary {
+  width: fit-content;
+  font-size: var(--step--1);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.preview pre {
+  margin-top: var(--space-2);
+  padding: var(--space-4);
+  border-radius: var(--radius-s);
+  background: var(--navy-abyss);
+  font-family: inherit;
+  font-size: var(--step--1);
+  line-height: 1.6;
+  white-space: pre-wrap;
+  color: var(--text-on-dark-soft);
+}
+
+@media (min-width: 56rem) {
+  .tool {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: var(--space-8);
+    align-items: start;
+  }
+
+  /* La lista acompaña al visitante mientras la ruta crece; las líneas guía la siguen. */
+  .symptoms {
+    position: sticky;
+    top: var(--space-6);
+  }
+
+  .route {
+    gap: var(--space-4);
+  }
+
+  .connector {
+    bottom: calc(-1 * var(--space-4) + 2px);
+  }
+}

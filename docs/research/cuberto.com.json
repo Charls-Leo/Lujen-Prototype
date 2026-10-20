@@ -1,0 +1,63 @@
+{
+  "source": "https://cuberto.com/",
+  "tokens": {
+    "spacing": { "scale": [18, 36, 72, 90, 108, 135, 180], "base_unit": 18 },
+    "typography": {
+      "families": ["Suisse Intl"],
+      "scale": [
+        { "role": "hero", "size": "81px", "weight": "500", "family": "Suisse Intl" },
+        { "role": "section-display", "size": "72px", "weight": "400", "family": "Suisse Intl" },
+        { "role": "service-title", "size": "37.8px", "weight": "400", "family": "Suisse Intl" },
+        { "role": "lead", "size": "23.04px", "weight": "400", "family": "Suisse Intl" },
+        { "role": "body", "size": "21.6px", "weight": "400", "family": "Suisse Intl" },
+        { "role": "label", "size": "14.4px", "weight": "400", "family": "Suisse Intl" }
+      ]
+    },
+    "colors": [
+      { "role": "background", "value": "#FFFFFF" },
+      { "role": "inverse-surface", "value": "#000000" },
+      { "role": "text-primary", "value": "#000000" },
+      { "role": "text-on-inverse-secondary", "value": "rgba(255,255,255,0.7)" },
+      { "role": "collapsed-band", "value": "#EEEEEE" },
+      { "role": "tint-surface", "value": "#E3F5F3" },
+      { "role": "tint-surface-2", "value": "#F1F3FA" }
+    ],
+    "radius": ["7.2px", "18px", "72px 72px 0 0", "999px"],
+    "shadows": [],
+    "image_ratios": [
+      { "usage": "project tile", "ratio": "1.6:1" },
+      { "usage": "showreel frame", "ratio": "16:9" }
+    ],
+    "grid": { "max_width": "1430px", "columns": 2, "gutter": "90px" }
+  },
+  "taste": [
+    {
+      "name": "Una familia, dos pesos",
+      "trigger": "When building hierarchy from an 81px hero down to 14.4px labels",
+      "decision": "Chose one family (Suisse Intl) in 400/500 with size-only steps over a display/body pairing or bold weights",
+      "reason": "Because a single voice reads as one studio speaking; contrast comes from scale and space, so the work imagery carries the expression",
+      "evidence": ["770 nodes in Suisse Intl, no other family", "weights: 400 x200, 500 x22", "steps 81 / 72 / 37.8 / 23 / 21.6 / 14.4px"]
+    },
+    {
+      "name": "Profundidad por inversión, no por sombra",
+      "trigger": "When separating sections and grouping content",
+      "decision": "Chose black panels with 72px top corners that slide over white over borders, dividers or card shadows",
+      "reason": "Because a full-surface inversion is felt as a change of room; hairlines and shadows read as UI chrome",
+      "evidence": ["no box-shadows on the page", "black covers 76% of measured background area", "panel first child radius 72px 72px 0 0"]
+    },
+    {
+      "name": "La densidad llega cuando el ojo llega",
+      "trigger": "When presenting five service lines with paragraph-length descriptions",
+      "decision": "Chose title-only light bands that expand and darken into art cards at reading position over an always-open card grid",
+      "reason": "Because the visitor only pays for the detail of the band they are looking at; the rest stays a calm list of names",
+      "evidence": ["collapsed bands #EEEEEE with 37.8px title and number", "expanded band: black gradient art, body and Explore", "border-radius/transform 0.5s cubic-bezier(0.4,0,0,1)"]
+    },
+    {
+      "name": "El cursor como material",
+      "trigger": "When giving feedback on hover across nav, buttons and media",
+      "decision": "Chose a blend-mode cursor, rolling text and ripple-fill buttons with long expo-out easing over color-only hover states",
+      "reason": "Because motion that answers the hand makes the page feel made by people who build interfaces, which is the product being sold",
+      "evidence": ["Cursor: fixed, mix-blend-mode exclusion, rotate(45deg)", "nav labels duplicated via data-text for a vertical roll", "Contacts: border and ripple layers; transform 0.8s cubic-bezier(0.16,1,0.3,1)"]
+    }
+  ]
+}

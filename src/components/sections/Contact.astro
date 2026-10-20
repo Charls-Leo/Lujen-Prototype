@@ -1,0 +1,195 @@
+---
+/**
+ * Cierre: habitación oscura con el resplandor de la N. Una invitación grande, WhatsApp directo
+ * y un mensaje corto que se arma aquí y se abre en WhatsApp (no hay servidor ni se guarda nada).
+ */
+import Button from '@/components/ui/Button.astro';
+import { contact, whatsappUrl } from '@/config/site';
+---
+
+<section class="room room--dark contact" id="contacto" aria-labelledby="contacto-title">
+  <div class="contact__glow" aria-hidden="true"></div>
+  <div class="container contact__inner">
+    <h2 class="contact__title display" id="contacto-title" data-reveal="lines">
+      <span class="line"><span>¿Hablamos </span></span>
+      <span class="line" style="--i: 1"><span>de tu negocio?</span></span>
+    </h2>
+
+    <div class="contact__actions" data-reveal="fade" style="--delay: 300ms">
+      <p class="lede contact__lede">Una conversación corta basta para saber por dónde empezar.</p>
+      <Button label="Escríbenos por WhatsApp" href={whatsappUrl} external icon="whatsapp" variant="light" size="l" />
+    </div>
+
+    <form class="composer" data-composer data-whatsapp={contact.whatsappNumber} novalidate>
+      <p class="composer__intro">O déjanos el mensaje listo:</p>
+      <div class="composer__fields">
+        <label class="field">
+          <span class="field__label">Tu nombre</span>
+          <input name="name" type="text" autocomplete="name" maxlength="80" />
+        </label>
+        <label class="field field--wide">
+          <span class="field__label">¿Qué necesitas resolver?</span>
+          <input
+            name="need"
+            type="text"
+            required
+            maxlength="400"
+            aria-describedby="composer-error"
+            placeholder="Ej.: me piden precios por WhatsApp y no doy abasto"
+          />
+        </label>
+        <Button label="Enviar" type="submit" iconEnd="arrow-up-right" class="composer__submit" />
+      </div>
+      <p class="composer__error" id="composer-error" aria-live="polite" data-composer-error></p>
+      <p class="composer__note">Se abre en tu WhatsApp; tú decides si lo envías. No guardamos nada.</p>
+    </form>
+  </div>
+</section>
+
+<script>
+  import { buildWhatsAppUrl, composeMessage } from '@/lib/whatsapp';
+
+  const form = document.querySelector<HTMLFormElement>('[data-composer]');
+  const error = form?.querySelector<HTMLElement>('[data-composer-error]');
+
+  if (form && error) {
+    const need = form.elements.namedItem('need') as HTMLInputElement;
+
+    need.addEventListener('input', () => {
+      error.textContent = '';
+      need.removeAttribute('aria-invalid');
+    });
+
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const data = new FormData(form);
+      const value = (key: string) => String(data.get(key) ?? '').trim();
+
+      if (!value('need')) {
+        error.textContent = 'Cuéntanos en una frase qué necesitas.';
+        need.setAttribute('aria-invalid', 'true');
+        need.focus();
+        return;
+      }
+
+      const message = composeMessage(['Hola, Lujen.', value('name') && `Soy ${value('name')}.`, '', value('need')]);
+      const url = buildWhatsAppUrl(message, form.dataset.whatsapp ?? '');
+      const opened = window.open(url, '_blank', 'noopener');
+      if (!opened) window.location.href = url;
+    });
+  }
+</script>
+
+<style>
+  .contact {
+    overflow: hidden;
+    padding-bottom: calc(var(--section-space) * 0.8);
+    background: linear-gradient(to bottom, var(--surface-dark), var(--navy-abyss));
+  }
+
+  /* El resplandor: los azules de la N, desde abajo. */
+  .contact__glow {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(60% 55% at 78% 100%, rgb(23 107 255 / 0.6), transparent 72%),
+      radial-gradient(34% 34% at 86% 92%, rgb(38 198 255 / 0.45), transparent 70%),
+      radial-gradient(40% 40% at 10% 0%, rgb(13 45 143 / 0.55), transparent 70%);
+    pointer-events: none;
+  }
+
+  .contact__inner {
+    position: relative;
+    display: grid;
+    gap: var(--space-8);
+  }
+
+  .contact__actions {
+    display: grid;
+    justify-items: start;
+    gap: var(--space-6);
+  }
+
+  .contact__lede {
+    color: var(--text-on-dark-soft);
+    max-width: 26ch;
+  }
+
+  .composer {
+    display: grid;
+    gap: var(--space-3);
+    padding-top: var(--space-6);
+    border-top: 1px solid var(--line-dark);
+  }
+
+  .composer__intro {
+    font-weight: 600;
+  }
+
+  .composer__fields {
+    display: grid;
+    gap: var(--space-5);
+    align-items: end;
+  }
+
+  .field {
+    display: grid;
+    gap: var(--space-1);
+  }
+
+  .field__label {
+    font-size: var(--step--1);
+    color: var(--text-on-dark-soft);
+  }
+
+  .field input {
+    width: 100%;
+    padding: var(--space-3) 0;
+    border: 0;
+    border-bottom: 1.5px solid var(--line-dark);
+    border-radius: 0;
+    background: transparent;
+    color: var(--text-on-dark);
+    font-size: max(1rem, var(--step-0)); /* 16px o más: evita el zoom de iOS */
+    transition: border-color var(--dur-hover) var(--ease-out);
+  }
+
+  .field input:focus-visible {
+    outline: none;
+    border-bottom-color: var(--brand-cyan);
+  }
+
+  .field input[aria-invalid='true'] {
+    border-bottom-color: var(--danger);
+  }
+
+  .composer :global(.composer__submit) {
+    justify-self: start;
+  }
+
+  .composer__error {
+    font-size: var(--step--1);
+    font-weight: 600;
+    color: var(--danger);
+  }
+
+  .composer__error:empty {
+    display: none;
+  }
+
+  .composer__note {
+    font-size: var(--step--1);
+    color: var(--text-on-dark-soft);
+  }
+
+  @media (min-width: 56rem) {
+    .contact__actions {
+      grid-template-columns: 1fr auto;
+      align-items: end;
+    }
+
+    .composer__fields {
+      grid-template-columns: minmax(0, 0.7fr) minmax(0, 1.6fr) auto;
+    }
+  }
+</style>

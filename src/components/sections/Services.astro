@@ -1,0 +1,251 @@
+---
+/**
+ * Servicios como bandas: cada una entra plegada (solo su nombre) y, al llegar al centro de la
+ * vista, se expande y se oscurece con su arte, una frase y tres etiquetas. Quedan abiertas.
+ * El contenido plegado sigue en el DOM y accesible; enfocarlo abre su banda.
+ * Sin JavaScript o con movimiento reducido, todas se muestran abiertas.
+ */
+import Button from '@/components/ui/Button.astro';
+import Icon from '@/components/ui/Icon.astro';
+import ServiceArt from '@/components/art/ServiceArt.astro';
+import { contact } from '@/config/site';
+import { serviceBands } from '@/data/services';
+import { buildWhatsAppUrl } from '@/lib/whatsapp';
+
+const quoteUrl = (title: string) =>
+  buildWhatsAppUrl(`Hola, Lujen. Me interesa: ${title.toLowerCase()}. ¿Me cuentan más?`, contact.whatsappNumber);
+---
+
+<section class="room services" id="servicios" aria-labelledby="servicios-title">
+  <div class="container">
+    <h2 class="heading services__title" id="servicios-title" data-reveal="lines">
+      <span class="line"><span>Lo que hacemos</span></span>
+    </h2>
+
+    <ol class="bands" role="list" data-bands>
+      {
+        serviceBands.map((band) => (
+          <li class="band" data-band data-status={band.status}>
+            <article class="band__card" aria-labelledby={`band-${band.id}`}>
+              <header class="band__head">
+                <h3 class="band__title" id={`band-${band.id}`}>
+                  {band.title}
+                </h3>
+                {band.status === 'en-camino' ? (
+                  <span class="band__badge">En camino</span>
+                ) : (
+                  <span class="band__arrow" aria-hidden="true">
+                    <Icon name="arrow-up-right" size={22} />
+                  </span>
+                )}
+              </header>
+              <div class="band__body">
+                <div class="band__inner">
+                  <div class="band__content">
+                    <div class="band__copy">
+                      <p class="band__tagline">{band.tagline}</p>
+                      <ul class="band__tags" role="list">
+                        {band.tags.map((tag) => (
+                          <li>{tag}</li>
+                        ))}
+                      </ul>
+                      {band.status === 'en-camino' ? (
+                        <Button label="Cuéntanos tu caso" href={quoteUrl(band.title)} external variant="ghost" />
+                      ) : (
+                        <Button label="Cotizar" href={quoteUrl(band.title)} external variant="light" iconEnd="arrow-up-right" />
+                      )}
+                    </div>
+                    <div class="band__art">
+                      <ServiceArt art={band.art} />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </article>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>
+
+<script>
+  const bands = Array.from(document.querySelectorAll<HTMLElement>('[data-band]'));
+  const OPEN = 'is-open';
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  const open = (band: Element) => band.classList.add(OPEN);
+
+  if (reduceMotion || !('IntersectionObserver' in window)) {
+    bands.forEach(open);
+  } else {
+    // Se abre al cruzar la franja central de la vista; las que ya quedaron arriba, también.
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting || entry.boundingClientRect.bottom < 0) {
+            open(entry.target);
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { rootMargin: '-38% 0px -38% 0px' },
+    );
+    bands.forEach((band) => observer.observe(band));
+  }
+
+  // Teclado y lectores: enfocar algo dentro de una banda plegada la abre.
+  bands.forEach((band) => band.addEventListener('focusin', () => open(band)));
+  window.addEventListener('beforeprint', () => bands.forEach(open));
+</script>
+
+<style>
+  .services__title {
+    margin-bottom: clamp(var(--space-7), 5vw, var(--space-8));
+  }
+
+  .bands {
+    display: grid;
+    gap: var(--space-3);
+  }
+
+  .band__card {
+    --pad: clamp(var(--space-5), 3.4vw, var(--space-7));
+    border-radius: var(--radius-media);
+    background: var(--surface-dark);
+    color: var(--text-on-dark);
+    transition:
+      background-color var(--dur-panel) var(--ease-panel),
+      color var(--dur-panel) var(--ease-panel);
+  }
+
+  .band__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-5);
+    padding: var(--pad) var(--pad) 0;
+  }
+
+  .band__title {
+    font-size: var(--step-2);
+    font-weight: 600;
+    letter-spacing: -0.03em;
+  }
+
+  .band__arrow {
+    display: grid;
+    flex-shrink: 0;
+    place-items: center;
+    width: 3rem;
+    height: 3rem;
+    border: 1.5px solid currentColor;
+    border-radius: 50%;
+    transition: rotate var(--dur-panel) var(--ease-out);
+  }
+
+  .band__badge {
+    flex-shrink: 0;
+    padding: var(--space-2) var(--space-4);
+    border: 1.5px dashed currentColor;
+    border-radius: var(--radius-pill);
+    font-size: var(--step--1);
+    font-weight: 600;
+  }
+
+  /* Altura animable sin medir: la fila pasa de 0fr a 1fr. */
+  .band__body {
+    display: grid;
+    grid-template-rows: 1fr;
+    transition: grid-template-rows var(--dur-panel) var(--ease-panel);
+  }
+
+  /* La fila animada no lleva relleno: así plegada mide 0 de verdad. */
+  .band__inner {
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  .band__content {
+    display: grid;
+    gap: var(--space-6);
+    padding: var(--space-5) var(--pad) var(--pad);
+  }
+
+  .band__copy {
+    display: grid;
+    align-content: start;
+    justify-items: start;
+    gap: var(--space-5);
+  }
+
+  .band__tagline {
+    max-width: 30ch;
+    font-size: var(--step-1);
+    line-height: 1.35;
+    color: var(--text-on-dark-soft);
+  }
+
+  .band__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+
+  .band__tags li {
+    padding: var(--space-2) var(--space-4);
+    border-radius: var(--radius-pill);
+    background: rgb(255 255 255 / 0.08);
+    font-size: var(--step--1);
+    font-weight: 500;
+  }
+
+  .band__art {
+    width: min(100%, 26rem);
+    justify-self: center;
+  }
+
+  .band[data-status='en-camino'] .band__card {
+    background: var(--navy-abyss);
+  }
+
+  @media (min-width: 56rem) {
+    .band__content {
+      grid-template-columns: 1fr minmax(0, 0.9fr);
+      align-items: center;
+      padding-top: var(--space-6);
+    }
+
+    .band__art {
+      justify-self: end;
+    }
+  }
+
+  /* Estado plegado (solo con JavaScript): banda clara con el nombre. */
+  :global(.js) .band:not(.is-open) .band__card {
+    background: var(--mist);
+    color: var(--text);
+  }
+
+  :global(.js) .band:not(.is-open) .band__body {
+    grid-template-rows: 0fr;
+  }
+
+  :global(.js) .band:not(.is-open) .band__head {
+    padding-bottom: var(--pad);
+  }
+
+  :global(.js) .band:not(.is-open) .band__arrow {
+    rotate: 90deg;
+  }
+
+  .band__head {
+    transition: padding var(--dur-panel) var(--ease-panel);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    :global(.js) .band:not(.is-open) .band__card:hover {
+      background: var(--mist-strong);
+    }
+  }
+</style>

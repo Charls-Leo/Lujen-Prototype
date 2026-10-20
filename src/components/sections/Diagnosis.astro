@@ -1,0 +1,42 @@
+---
+/**
+ * Diagnóstico: habitación oscura con encabezado estático + isla interactiva
+ * (hidratada cuando el navegador queda libre).
+ */
+import DiagnosisTool from '@/components/islands/DiagnosisTool';
+---
+
+<section class="room room--dark diagnosis" id="diagnostico" aria-labelledby="diagnostico-title">
+  <div class="container">
+    <header class="diagnosis__head">
+      <h2 class="heading" id="diagnostico-title" data-reveal="lines">
+        <span class="line"><span>¿Dónde se te está </span></span>
+        <span class="line" style="--i: 1"><span>escapando el negocio?</span></span>
+      </h2>
+      <p class="lede diagnosis__lede" data-reveal="fade" style="--delay: 250ms">
+        Marca lo que te pasa. Te mostramos por dónde empezar.
+      </p>
+    </header>
+    <DiagnosisTool client:idle />
+  </div>
+</section>
+
+<style>
+  .diagnosis__head {
+    display: grid;
+    gap: var(--space-5);
+    margin-bottom: clamp(var(--space-7), 5vw, var(--space-8));
+  }
+
+  .diagnosis__lede {
+    color: var(--text-on-dark-soft);
+    max-width: 24ch;
+  }
+
+  @media (min-width: 56rem) {
+    .diagnosis__head {
+      grid-template-columns: 1fr auto;
+      align-items: end;
+    }
+  }
+</style>

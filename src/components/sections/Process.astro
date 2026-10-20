@@ -1,0 +1,128 @@
+---
+/**
+ * Método: la habitación azul. Cuatro pasos en una fila, unidos por un trazo que se dibuja
+ * con el scroll (CSS scroll-driven; sin soporte, el trazo se ve completo).
+ */
+import { processSteps } from '@/data/process';
+---
+
+<section class="room room--blue process" id="proceso" aria-labelledby="proceso-title">
+  <div class="container">
+    <h2 class="heading process__title" id="proceso-title" data-reveal="lines">
+      <span class="line"><span>Primero entendemos. </span></span>
+      <span class="line" style="--i: 1"><span>Después construimos.</span></span>
+    </h2>
+
+    <div class="steps">
+      <span class="steps__track" aria-hidden="true"></span>
+      <ol class="steps__list" role="list">
+      {
+        processSteps.map((step, index) => (
+          <li class="step" data-reveal="fade" style={`--i: ${index}`}>
+            <span class="step__number" aria-hidden="true">
+              {String(index + 1).padStart(2, '0')}
+            </span>
+            <h3 class="step__title">{step.title}</h3>
+            <p class="step__line">{step.line}</p>
+          </li>
+        ))
+      }
+      </ol>
+    </div>
+  </div>
+</section>
+
+<style>
+  .process__title {
+    margin-bottom: clamp(var(--space-7), 6vw, var(--space-9));
+  }
+
+  .steps {
+    position: relative;
+    view-timeline-name: --steps;
+  }
+
+  .steps__list {
+    display: grid;
+    gap: var(--space-7);
+  }
+
+  .steps__track {
+    display: none;
+  }
+
+  .step {
+    display: grid;
+    gap: var(--space-2);
+    align-content: start;
+  }
+
+  .step__number {
+    display: grid;
+    place-items: center;
+    width: 3.5rem;
+    height: 3.5rem;
+    margin-bottom: var(--space-4);
+    border-radius: 50%;
+    background: var(--white);
+    color: var(--brand-electric);
+    font-weight: 650;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .step__title {
+    font-size: clamp(1.5rem, 1rem + 1.2vw, 2.125rem);
+    font-weight: 600;
+    letter-spacing: -0.03em;
+  }
+
+  .step__line {
+    max-width: 22ch;
+    font-size: var(--step-0);
+    color: var(--text-on-blue);
+  }
+
+  @media (min-width: 56rem) {
+    .steps__list {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: var(--space-6);
+    }
+
+    /* Trazo que une los números y se dibuja al recorrer la sección. */
+    .steps__track {
+      position: absolute;
+      top: 1.75rem;
+      left: 1.75rem;
+      right: 0;
+      display: block;
+      height: 2px;
+      background: rgb(255 255 255 / 0.55);
+      transform-origin: left;
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+      @supports (animation-timeline: view()) {
+        .steps__track {
+          animation: track-draw linear both;
+        }
+
+        /* animation-timeline va en una regla aparte (más específica): si comparte regla con el atajo
+         `animation`, el minificador los fusiona en una declaración inválida y la animación se pierde. */
+        .steps > .steps__track {
+          animation-timeline: --steps;
+          animation-range: entry 40% cover 55%;
+        }
+      }
+    }
+
+    .step {
+      position: relative;
+    }
+  }
+
+  @keyframes track-draw {
+    from {
+      transform: scaleX(0);
+    }
+  }
+</style>

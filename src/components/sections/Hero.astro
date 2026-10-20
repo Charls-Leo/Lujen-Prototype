@@ -1,0 +1,145 @@
+---
+/**
+ * Primera vista: el eslogan como titular cinético (el verbo rueda: Digitaliza, Organiza,
+ * Automatiza), una línea de apoyo, las dos acciones y el escenario de marca.
+ */
+import Button from '@/components/ui/Button.astro';
+import Icon from '@/components/ui/Icon.astro';
+import BrandStage from '@/components/art/BrandStage.astro';
+import { site, whatsappUrl } from '@/config/site';
+
+const verbs = [...site.slogan, site.slogan[0]]; // el primero se repite para cerrar el ciclo sin salto
+---
+
+<section class="hero" id="inicio" aria-labelledby="hero-title">
+  <div class="hero__copy container">
+    <h1 class="hero__title display" id="hero-title" data-reveal="lines">
+      <span class="visually-hidden">Digitaliza, organiza y automatiza tu negocio.</span>
+      <span class="line" aria-hidden="true">
+        <span class="hero__verbs">
+          <span class="hero__verbs-track">
+            {verbs.map((verb) => <span>{verb}</span>)}
+          </span>
+        </span>
+      </span>
+      <span class="line" aria-hidden="true" style="--i: 1"><span>tu negocio.</span></span>
+    </h1>
+
+    <div class="hero__foot" data-reveal="fade" style="--delay: 350ms">
+      <p class="hero__lede lede">
+        Webs, reseñas y datos para negocios que quieren crecer sin enredarse.
+      </p>
+      <div class="hero__actions">
+        <Button label="Hablemos por WhatsApp" href={whatsappUrl} external icon="whatsapp" />
+        <a class="hero__link has-roll" href="#diagnostico">
+          <span class="roll"><span data-text="Haz el diagnóstico">Haz el diagnóstico</span></span>
+          <Icon name="arrow-down" size={18} />
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <BrandStage />
+</section>
+
+<style>
+  .hero {
+    padding-block: clamp(var(--space-7), 8vw, var(--space-9)) var(--section-space);
+  }
+
+  .hero__copy {
+    display: grid;
+    gap: var(--space-7);
+    margin-bottom: clamp(var(--space-7), 6vw, var(--space-9));
+  }
+
+  /* El verbo rueda dentro de su línea: una pila de palabras que sube paso a paso. */
+  /* Cada palabra ocupa 1.3em (más que la línea) para que sus descendentes no asomen
+     en la ventana de la siguiente; los márgenes negativos devuelven la altura de línea. */
+  .hero__verbs {
+    display: inline-block;
+    height: 1.3em;
+    margin-block: -0.16em;
+    overflow: hidden;
+    vertical-align: top;
+    color: var(--brand-electric);
+  }
+
+  .hero__verbs-track {
+    display: grid;
+  }
+
+  .hero__verbs-track > span {
+    display: block;
+    height: 1.3em;
+    line-height: 1.3em;
+  }
+
+  .hero__foot {
+    display: grid;
+    gap: var(--space-6);
+  }
+
+  .hero__lede {
+    color: var(--text-soft);
+    max-width: 28ch;
+  }
+
+  .hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-4) var(--space-6);
+  }
+
+  .hero__link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .hero__link :global(.icon) {
+    transition: translate var(--dur-hover) var(--ease-out);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .hero__link:hover :global(.icon) {
+      translate: 0 3px;
+    }
+  }
+
+  @media (min-width: 56rem) {
+    .hero__foot {
+      grid-template-columns: 1fr auto;
+      align-items: end;
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .hero__verbs-track {
+      animation: verbs 7.5s var(--ease-in-out) infinite;
+      animation-delay: 1.4s;
+    }
+  }
+
+  /* Tres verbos y la repetición del primero: sostener, subir, sostener… y volver sin salto. */
+  @keyframes verbs {
+    0%,
+    26% {
+      transform: translateY(0);
+    }
+    33%,
+    59% {
+      transform: translateY(-25%);
+    }
+    66%,
+    92% {
+      transform: translateY(-50%);
+    }
+    100% {
+      transform: translateY(-75%);
+    }
+  }
+</style>

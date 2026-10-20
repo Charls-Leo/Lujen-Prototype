@@ -1,0 +1,123 @@
+---
+/**
+ * Arte de cada banda de servicio: composiciones geométricas con el degradado de la N.
+ * Decorativo (aria-hidden). Sus piezas entran escalonadas cuando la banda se abre
+ * (clase .is-open en un ancestro; ver Services.astro).
+ */
+import type { ServiceArt } from '@/data/services';
+
+interface Props {
+  art: ServiceArt;
+}
+
+const { art } = Astro.props;
+const id = `art-${art}`;
+---
+
+<svg class="art" viewBox="0 0 400 300" aria-hidden="true" focusable="false">
+  <defs>
+    <linearGradient id={`${id}-a`} x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#26c6ff"></stop>
+      <stop offset="0.55" stop-color="#176bff"></stop>
+      <stop offset="1" stop-color="#0d2d8f"></stop>
+    </linearGradient>
+    <linearGradient id={`${id}-b`} x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0" stop-color="#176bff" stop-opacity="0.15"></stop>
+      <stop offset="1" stop-color="#26c6ff" stop-opacity="0.9"></stop>
+    </linearGradient>
+  </defs>
+
+  {
+    art === 'web' && (
+      <>
+        <rect class="art__piece" style="--i: 0" x="70" y="40" width="230" height="160" rx="18" fill={`url(#${id}-b)`} fill-opacity="0.35" />
+        <rect class="art__piece" style="--i: 1" x="100" y="70" width="230" height="160" rx="18" fill={`url(#${id}-b)`} fill-opacity="0.6" />
+        <g class="art__piece" style="--i: 2">
+          <rect x="130" y="100" width="230" height="160" rx="18" fill={`url(#${id}-a)`} />
+          <circle cx="152" cy="120" r="4" fill="#fff" opacity="0.7" />
+          <circle cx="166" cy="120" r="4" fill="#fff" opacity="0.7" />
+          <rect x="150" y="146" width="120" height="12" rx="6" fill="#fff" />
+          <rect x="150" y="168" width="84" height="10" rx="5" fill="#fff" opacity="0.6" />
+          <rect x="150" y="204" width="76" height="28" rx="14" fill="#081a3a" />
+        </g>
+        <path class="art__piece" style="--i: 3" d="M300 214l26 66 10-26 26-10z" fill="#fff" />
+      </>
+    )
+  }
+
+  {
+    art === 'reviews' && (
+      <>
+        <circle class="art__piece" style="--i: 0" cx="200" cy="150" r="128" fill="none" stroke="#26c6ff" stroke-opacity="0.18" stroke-width="2" />
+        <circle class="art__piece" style="--i: 1" cx="200" cy="150" r="92" fill="none" stroke="#26c6ff" stroke-opacity="0.32" stroke-width="2" />
+        <path
+          class="art__piece"
+          style="--i: 2"
+          d="M200 72l22 46 50 6-37 34 10 50-45-25-45 25 10-50-37-34 50-6z"
+          fill={`url(#${id}-a)`}
+        />
+        {[0, 1, 2, 3, 4].map((n) => (
+          <circle class="art__piece" style={`--i: ${3 + n * 0.4}`} cx={150 + n * 25} cy="262" r="7" fill="#26c6ff" />
+        ))}
+      </>
+    )
+  }
+
+  {
+    art === 'data' && (
+      <>
+        {[70, 110, 92, 150, 132, 186].map((h, n) => (
+          <rect class="art__piece" style={`--i: ${n * 0.5}`} x={60 + n * 50} y={260 - h} width="32" height={h} rx="8" fill={`url(#${id}-a)`} />
+        ))}
+        <path
+          class="art__piece"
+          style="--i: 3"
+          d="M60 170 C110 150 130 190 176 130 S260 120 290 100 S340 64 360 50"
+          fill="none"
+          stroke="#fff"
+          stroke-width="3"
+          stroke-linecap="round"
+        />
+        <circle class="art__piece" style="--i: 3.4" cx="360" cy="50" r="7" fill="#fff" />
+      </>
+    )
+  }
+
+  {
+    art === 'automation' && (
+      <>
+        <circle class="art__piece" style="--i: 0" cx="200" cy="150" r="118" fill="none" stroke="#a9bbe0" stroke-opacity="0.4" stroke-width="2" stroke-dasharray="6 10" />
+        <circle class="art__piece" style="--i: 1" cx="200" cy="150" r="70" fill="none" stroke="#a9bbe0" stroke-opacity="0.4" stroke-width="2" stroke-dasharray="6 10" />
+        <circle class="art__piece" style="--i: 2" cx="200" cy="150" r="26" fill={`url(#${id}-a)`} fill-opacity="0.7" />
+        <circle class="art__piece" style="--i: 2.5" cx="318" cy="150" r="10" fill="none" stroke="#26c6ff" stroke-width="2" stroke-dasharray="4 4" />
+        <circle class="art__piece" style="--i: 3" cx="130" cy="94" r="10" fill="none" stroke="#26c6ff" stroke-width="2" stroke-dasharray="4 4" />
+        <circle class="art__piece" style="--i: 3.5" cx="150" cy="264" r="10" fill="none" stroke="#26c6ff" stroke-width="2" stroke-dasharray="4 4" />
+      </>
+    )
+  }
+</svg>
+
+<style>
+  .art {
+    width: 100%;
+    height: auto;
+    overflow: visible;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    :global(.js) .art__piece {
+      opacity: 0;
+      transform: translateY(18px);
+      transform-box: fill-box;
+      transition:
+        opacity 700ms var(--ease-out),
+        transform 900ms var(--ease-out);
+      transition-delay: calc(200ms + var(--i) * 90ms);
+    }
+
+    :global(.is-open) .art__piece {
+      opacity: 1;
+      transform: none;
+    }
+  }
+</style>

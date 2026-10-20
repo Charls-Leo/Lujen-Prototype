@@ -1,0 +1,413 @@
+---
+/**
+ * Cabecera: barra superior que se va con el scroll y un botón de menú flotante que aparece
+ * después de la primera vista (en móvil, siempre). El menú es un <dialog> nativo: atrapa el
+ * foco, cierra con Escape y deja el resto de la página inerte.
+ */
+import { Image } from 'astro:assets';
+import wordmark from '@/assets/brand/lujen-wordmark.png';
+import wordmarkLight from '@/assets/brand/lujen-wordmark-light.png';
+import Button from '@/components/ui/Button.astro';
+import Icon from '@/components/ui/Icon.astro';
+import { primaryNav, whatsappUrl } from '@/config/site';
+
+const isHome = Astro.url.pathname === '/';
+const navHref = (hash: string) => (isHome ? hash : `/${hash}`);
+---
+
+<header class="bar container" data-bar>
+  <a class="bar__brand" href={isHome ? '#inicio' : '/'} aria-label="Lujen, ir al inicio">
+    <Image src={wordmark} alt="" width={112} densities={[1, 2]} loading="eager" />
+  </a>
+  <nav class="bar__nav" aria-label="Principal">
+    <ul role="list">
+      {
+        primaryNav.map((item) => (
+          <li>
+            <a class="has-roll" href={navHref(item.href)}>
+              <span class="roll">
+                <span data-text={item.label}>{item.label}</span>
+              </span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </nav>
+  <Button label="Hablemos" href={whatsappUrl} external class="bar__cta" />
+</header>
+
+<button
+  class="menu-toggle"
+  type="button"
+  aria-haspopup="dialog"
+  aria-controls="menu"
+  aria-expanded="false"
+  data-menu-toggle
+  data-magnetic
+>
+  <span class="visually-hidden">Abrir menú</span>
+  <span class="menu-toggle__lines" aria-hidden="true"></span>
+</button>
+
+<dialog class="menu" id="menu" aria-label="Menú" data-menu>
+  <div class="menu__panel">
+    <div class="menu__top">
+      <a class="menu__brand" href={isHome ? '#inicio' : '/'} data-menu-link>
+        <Image src={wordmarkLight} alt="Lujen" width={112} densities={[1, 2]} />
+      </a>
+      <button class="menu__close" type="button" data-menu-close>
+        <span class="visually-hidden">Cerrar menú</span>
+        <Icon name="close" size={22} />
+      </button>
+    </div>
+    <nav aria-label="Menú principal">
+      <ol role="list" class="menu__list">
+        {
+          primaryNav.map((item, index) => (
+            <li style={`--i: ${index}`}>
+              <a class="has-roll" href={navHref(item.href)} data-menu-link>
+                <span class="roll">
+                  <span data-text={item.label}>{item.label}</span>
+                </span>
+              </a>
+            </li>
+          ))
+        }
+      </ol>
+    </nav>
+    <div class="menu__foot">
+      <Button label="Escríbenos por WhatsApp" href={whatsappUrl} external icon="whatsapp" variant="light" />
+    </div>
+  </div>
+</dialog>
+
+<script>
+  const toggle = document.querySelector<HTMLButtonElement>('[data-menu-toggle]');
+  const menu = document.querySelector<HTMLDialogElement>('[data-menu]');
+  const bar = document.querySelector<HTMLElement>('[data-bar]');
+
+  if (toggle && menu) {
+    const CLOSE_MS = 450;
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    const setState = (open: boolean) => {
+      toggle.setAttribute('aria-expanded', String(open));
+      toggle.toggleAttribute('data-open', open);
+    };
+
+    const open = () => {
+      menu.showModal();
+      setState(true);
+    };
+
+    const close = () => {
+      if (!menu.open || menu.hasAttribute('data-closing')) return;
+      setState(false);
+      if (reduceMotion) {
+        menu.close();
+        return;
+      }
+      menu.setAttribute('data-closing', '');
+      window.setTimeout(() => {
+        menu.removeAttribute('data-closing');
+        menu.close();
+      }, CLOSE_MS);
+    };
+
+    toggle.addEventListener('click', () => (menu.open ? close() : open()));
+
+    // Escape: se anima el cierre en lugar de cerrar de golpe.
+    menu.addEventListener('cancel', (event) => {
+      event.preventDefault();
+      close();
+    });
+
+    // Clic en el fondo (fuera del panel) cierra.
+    menu.addEventListener('click', (event) => {
+      if (event.target === menu) close();
+    });
+
+    menu.querySelectorAll('[data-menu-link], [data-menu-close]').forEach((element) =>
+      element.addEventListener('click', close),
+    );
+    menu.addEventListener('close', () => {
+      setState(false);
+      toggle.focus();
+    });
+
+    // El botón flotante aparece cuando la barra superior sale de la vista.
+    if (bar && 'IntersectionObserver' in window) {
+      new IntersectionObserver(([entry]) => {
+        toggle.toggleAttribute('data-floating', !entry?.isIntersecting);
+      }).observe(bar);
+    }
+  }
+</script>
+
+<style>
+  /* ---------- Barra superior ---------- */
+  .bar {
+    position: relative;
+    z-index: var(--z-header);
+    display: flex;
+    align-items: center;
+    gap: var(--space-6);
+    height: var(--header-h);
+  }
+
+  .bar__brand img {
+    width: 112px;
+    height: auto;
+  }
+
+  .bar__nav {
+    display: none;
+    margin-inline-start: auto;
+  }
+
+  .bar__nav ul {
+    display: flex;
+    gap: clamp(var(--space-5), 2.4vw, var(--space-7));
+  }
+
+  .bar__nav a {
+    display: block;
+    padding-block: var(--space-2);
+    font-weight: 500;
+    text-decoration: none;
+  }
+
+  .bar :global(.bar__cta) {
+    display: none;
+  }
+
+  @media (min-width: 60rem) {
+    .bar__nav {
+      display: block;
+    }
+
+    .bar :global(.bar__cta) {
+      display: inline-flex;
+      min-height: 3rem;
+      padding-inline: var(--space-5);
+    }
+  }
+
+  /* ---------- Botón de menú flotante ---------- */
+  .menu-toggle {
+    position: fixed;
+    top: calc(var(--header-h) / 2 - 1.75rem);
+    right: var(--gutter);
+    z-index: calc(var(--z-menu) + 1);
+    display: grid;
+    place-items: center;
+    width: 3.5rem;
+    height: 3.5rem;
+    border: 0;
+    border-radius: 50%;
+    background: var(--brand-deep-navy);
+    color: var(--white);
+    box-shadow: var(--shadow-float);
+    transition:
+      scale 500ms var(--ease-out),
+      opacity 300ms var(--ease-out),
+      background-color var(--dur-hover) var(--ease-out),
+      translate 600ms var(--ease-out);
+  }
+
+  .menu-toggle:active {
+    scale: 0.94;
+  }
+
+  /* Dos líneas que se cruzan en una X al abrir. */
+  .menu-toggle__lines {
+    position: relative;
+    display: block;
+    width: 1.25rem;
+    height: 10px;
+  }
+
+  .menu-toggle__lines::before,
+  .menu-toggle__lines::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 1.5px;
+    background: currentColor;
+    transition: transform 450ms var(--ease-out);
+  }
+
+  .menu-toggle__lines::before {
+    top: 50%;
+    transform: translateY(-4px);
+  }
+
+  .menu-toggle__lines::after {
+    top: 50%;
+    transform: translateY(4px);
+  }
+
+  .menu-toggle[data-open] .menu-toggle__lines::before {
+    transform: rotate(45deg);
+  }
+
+  .menu-toggle[data-open] .menu-toggle__lines::after {
+    transform: rotate(-45deg);
+  }
+
+  .menu-toggle[data-open] {
+    background: var(--brand-electric);
+  }
+
+  @media (min-width: 60rem) {
+    .menu-toggle {
+      top: var(--space-5);
+    }
+
+    .menu-toggle:not([data-floating], [data-open]) {
+      scale: 0.4;
+      opacity: 0;
+      pointer-events: none;
+    }
+  }
+
+  /* ---------- Menú ---------- */
+  .menu {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    max-width: none;
+    height: 100%;
+    max-height: none;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: var(--text-on-dark);
+  }
+
+  .menu::backdrop {
+    background: rgb(4 13 32 / 0.5);
+    opacity: 1;
+    transition: opacity 450ms var(--ease-out);
+  }
+
+  .menu__panel {
+    position: absolute;
+    inset: 0 0 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-7);
+    width: min(100%, 36rem);
+    padding: var(--space-5) var(--gutter) var(--space-7);
+    border-radius: var(--radius-panel) 0 0 var(--radius-panel);
+    background: var(--brand-deep-navy);
+    overflow-y: auto;
+    clip-path: inset(0 0 0 0 round var(--radius-panel) 0 0 var(--radius-panel));
+    transition: clip-path 650ms var(--ease-out);
+  }
+
+  .menu__top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .menu__brand {
+    display: block;
+    width: fit-content;
+    padding-block: var(--space-4);
+  }
+
+  .menu__close {
+    display: grid;
+    place-items: center;
+    width: 3.5rem;
+    height: 3.5rem;
+    border: 1.5px solid var(--line-dark);
+    border-radius: 50%;
+    background: transparent;
+    color: var(--text-on-dark);
+    transition:
+      background-color var(--dur-hover) var(--ease-out),
+      rotate 500ms var(--ease-out);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .menu__close:hover {
+      background: var(--brand-electric);
+      rotate: 90deg;
+    }
+  }
+
+  .menu__brand img {
+    width: 112px;
+    height: auto;
+  }
+
+  .menu__list {
+    display: grid;
+    gap: var(--space-1);
+  }
+
+  .menu__list a {
+    display: block;
+    font-size: clamp(2.25rem, 1.5rem + 3vw, 3.5rem);
+    font-weight: 600;
+    font-stretch: var(--stretch);
+    letter-spacing: -0.035em;
+    line-height: 1.15;
+    text-decoration: none;
+    transition: color var(--dur-hover) var(--ease-out);
+  }
+
+  .menu__list a:hover {
+    color: var(--brand-cyan);
+  }
+
+  .menu__list li {
+    transition:
+      transform 750ms var(--ease-out),
+      opacity 500ms var(--ease-out);
+    transition-delay: calc(120ms + var(--i) * 50ms);
+  }
+
+  .menu__foot {
+    margin-top: auto;
+  }
+
+  /* Entrada y salida del panel. */
+  @media (prefers-reduced-motion: no-preference) {
+    @starting-style {
+      .menu[open] .menu__panel {
+        clip-path: inset(0 0 0 100% round var(--radius-panel) 0 0 var(--radius-panel));
+      }
+
+      .menu[open] .menu__list li {
+        opacity: 0;
+        transform: translateX(3rem);
+      }
+
+      .menu[open]::backdrop {
+        opacity: 0;
+      }
+    }
+
+    .menu[data-closing] .menu__panel {
+      clip-path: inset(0 0 0 100% round var(--radius-panel) 0 0 var(--radius-panel));
+      transition-duration: 450ms;
+      transition-timing-function: var(--ease-in-out);
+    }
+
+    .menu[data-closing] .menu__list li {
+      opacity: 0;
+      transition-delay: 0ms;
+    }
+
+    .menu[data-closing]::backdrop {
+      opacity: 0;
+    }
+  }
+</style>
