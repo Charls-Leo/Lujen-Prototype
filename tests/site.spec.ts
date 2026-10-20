@@ -8,7 +8,7 @@ async function stubWhatsApp(page: Page) {
 
 /** Espera a que la isla del diagnóstico esté hidratada antes de interactuar. */
 async function gotoDiagnosis(page: Page) {
-  await page.goto('/#diagnostico');
+  await page.goto('./#diagnostico');
   await expect(page.locator('#diagnostico astro-island')).not.toHaveAttribute('ssr', '');
 }
 
@@ -24,7 +24,7 @@ function collectErrors(page: Page): string[] {
 test.describe('Página principal', () => {
   test('carga sin errores y con la marca visible', async ({ page }) => {
     const errors = collectErrors(page);
-    await page.goto('/');
+    await page.goto('./');
     await expect(page).toHaveTitle(/Lujen/);
     await expect(page.getByRole('heading', { level: 1 })).toContainText('Digitaliza, organiza y automatiza tu negocio.');
     await expect(page.getByRole('link', { name: 'Lujen, ir al inicio' }).locator('img')).toBeVisible();
@@ -34,7 +34,7 @@ test.describe('Página principal', () => {
   });
 
   test('cada ancla de la navegación apunta a una sección existente', async ({ page }) => {
-    await page.goto('/');
+    await page.goto('./');
     const hrefs = await page.locator('a[href^="#"]').evaluateAll((links) =>
       [...new Set(links.map((link) => link.getAttribute('href')))].filter((href) => href && href !== '#'),
     );
@@ -45,7 +45,7 @@ test.describe('Página principal', () => {
   });
 
   test('metadatos de SEO presentes', async ({ page }) => {
-    await page.goto('/');
+    await page.goto('./');
     await expect(page.locator('meta[name="description"]')).toHaveAttribute('content', /negocios/);
     await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', /\/$/);
     await expect(page.locator('meta[property="og:image"]')).toHaveAttribute('content', /og-lujen\.png$/);
@@ -55,7 +55,7 @@ test.describe('Página principal', () => {
 
   test('sin violaciones de accesibilidad graves (axe)', async ({ page }) => {
     await page.emulateMedia({ reducedMotion: 'reduce' });
-    await page.goto('/');
+    await page.goto('./');
     const results = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21aa']).analyze();
     const serious = results.violations.filter((v) => v.impact === 'serious' || v.impact === 'critical');
     expect(serious.map((v) => `${v.id}: ${v.nodes.map((n) => n.target.join(' ')).join(', ')}`)).toEqual([]);
@@ -111,7 +111,7 @@ test.describe('Diagnóstico rápido', () => {
 
 test.describe('Servicios', () => {
   test('las bandas se abren al llegar a ellas y al recibir foco', async ({ page }) => {
-    await page.goto('/');
+    await page.goto('./');
     const bands = page.locator('[data-band]');
     await expect(bands).toHaveCount(4);
     await expect(bands.last()).not.toHaveClass(/is-open/);
@@ -125,7 +125,7 @@ test.describe('Servicios', () => {
   });
 
   test('lo que viene se marca como en camino', async ({ page }) => {
-    await page.goto('/');
+    await page.goto('./');
     await expect(page.locator('[data-band][data-status="en-camino"]')).toContainText('En camino');
   });
 });
@@ -134,7 +134,7 @@ test.describe('Contacto', () => {
   test('valida el campo obligatorio y abre WhatsApp con el mensaje', async ({ page, context }) => {
     await stubWhatsApp(page);
     await context.route(/(wa\.me|whatsapp\.com)/, (route) => route.fulfill({ status: 200, body: 'ok' }));
-    await page.goto('/#contacto');
+    await page.goto('./#contacto');
 
     const submit = page.getByRole('button', { name: 'Enviar' });
     await submit.click();
@@ -154,7 +154,7 @@ test.describe('Contacto', () => {
 test.describe('Navegación móvil', () => {
   test('el menú abre, navega y se cierra', async ({ page, isMobile }) => {
     test.skip(!isMobile, 'Solo en móvil');
-    await page.goto('/');
+    await page.goto('./');
     const toggle = page.getByRole('button', { name: 'Abrir menú' });
     await toggle.click();
     await expect(page.locator('[data-menu-toggle]')).toHaveAttribute('aria-expanded', 'true');
@@ -165,7 +165,7 @@ test.describe('Navegación móvil', () => {
 
   test('Escape cierra el menú y devuelve el foco', async ({ page, isMobile }) => {
     test.skip(!isMobile, 'Solo en móvil');
-    await page.goto('/');
+    await page.goto('./');
     await page.getByRole('button', { name: 'Abrir menú' }).click();
     await page.keyboard.press('Escape');
     await expect(page.locator('[data-menu-toggle]')).toHaveAttribute('aria-expanded', 'false');
@@ -174,7 +174,7 @@ test.describe('Navegación móvil', () => {
 });
 
 test('página 404 con regreso al inicio', async ({ page }) => {
-  const response = await page.goto('/ruta-que-no-existe');
+  const response = await page.goto('./ruta-que-no-existe');
   expect(response?.status()).toBe(404);
   await expect(page.getByRole('heading', { level: 1 })).toHaveText('Esta página se nos escapó.');
   await page.getByRole('link', { name: 'Volver al inicio' }).click();

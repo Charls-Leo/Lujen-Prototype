@@ -2,6 +2,7 @@
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Button from '@/components/ui/Button.astro';
 import { whatsappUrl } from '@/config/site';
+import { homePath } from '@/lib/paths';
 ---
 
 <BaseLayout title="Página no encontrada — Lujen" description="Esta página no existe." noindex>
@@ -14,7 +15,7 @@ import { whatsappUrl } from '@/config/site';
       </h1>
       <p class="lede not-found__lede">El enlace puede estar mal escrito o la página ya no existe.</p>
       <div class="not-found__actions">
-        <Button label="Volver al inicio" href="/" iconEnd="arrow-up-right" />
+        <Button label="Volver al inicio" href={homePath} iconEnd="arrow-up-right" />
         <Button label="Escribir por WhatsApp" href={whatsappUrl} external variant="ghost" icon="whatsapp" />
       </div>
     </div>

@@ -10,13 +10,14 @@ import wordmarkLight from '@/assets/brand/lujen-wordmark-light.png';
 import Button from '@/components/ui/Button.astro';
 import Icon from '@/components/ui/Icon.astro';
 import { primaryNav, whatsappUrl } from '@/config/site';
+import { homePath } from '@/lib/paths';
 
-const isHome = Astro.url.pathname === '/';
-const navHref = (hash: string) => (isHome ? hash : `/${hash}`);
+const isHome = Astro.url.pathname.replace(/\/$/, '') === homePath.replace(/\/$/, '');
+const navHref = (hash: string) => (isHome ? hash : `${homePath}${hash}`);
 ---
 
 <header class="bar container" data-bar>
-  <a class="bar__brand" href={isHome ? '#inicio' : '/'} aria-label="Lujen, ir al inicio">
+  <a class="bar__brand" href={isHome ? '#inicio' : homePath} aria-label="Lujen, ir al inicio">
     <Image src={wordmark} alt="" width={112} densities={[1, 2]} loading="eager" />
   </a>
   <nav class="bar__nav" aria-label="Principal">
@@ -53,7 +54,7 @@ const navHref = (hash: string) => (isHome ? hash : `/${hash}`);
 <dialog class="menu" id="menu" aria-label="Menú" data-menu>
   <div class="menu__panel">
     <div class="menu__top">
-      <a class="menu__brand" href={isHome ? '#inicio' : '/'} data-menu-link>
+      <a class="menu__brand" href={isHome ? '#inicio' : homePath} data-menu-link>
         <Image src={wordmarkLight} alt="Lujen" width={112} densities={[1, 2]} />
       </a>
       <button class="menu__close" type="button" data-menu-close>

@@ -6,11 +6,12 @@ import { loadEnv } from 'vite';
 
 const env = loadEnv(process.env.NODE_ENV ?? 'production', process.cwd(), '');
 
-// Dominio provisional: reemplazar SITE_URL en .env cuando el dominio esté confirmado.
-const site = env.SITE_URL || 'https://lujen.co';
+const site = env.SITE_URL || 'https://charls-leo.github.io';
 
 export default defineConfig({
   site,
+  base: '/Lujen-Prototype/',
+  output: 'static',
   integrations: [react(), sitemap()],
   prefetch: { prefetchAll: false, defaultStrategy: 'hover' },
   build: { inlineStylesheets: 'auto' },

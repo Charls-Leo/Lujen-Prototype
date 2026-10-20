@@ -5,9 +5,11 @@
 import { Image } from 'astro:assets';
 import marcaLight from '@/assets/brand/lujen-marca-light.png';
 import { primaryNav, site, whatsappUrl } from '@/config/site';
+import { homePath } from '@/lib/paths';
 
 const year = new Date().getFullYear();
-const navHref = (hash: string) => (Astro.url.pathname === '/' ? hash : `/${hash}`);
+const isHome = Astro.url.pathname.replace(/\/$/, '') === homePath.replace(/\/$/, '');
+const navHref = (hash: string) => (isHome ? hash : `${homePath}${hash}`);
 const links = [...primaryNav, { label: 'Contacto', href: '#contacto' as const }];
 ---
 
